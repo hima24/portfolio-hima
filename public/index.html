@@ -9,7 +9,7 @@
 <style>
   :root {
     --bg:#05070f;--surface:#1118278c;--surface-solid:#0b1020;--surface2:#1e293b73;
-    --ink:#eef3fb;--muted:#8595b5;--accent:#2ae5ff;
+    --ink:#f4f7fc;--muted:#a7b6d4;--accent:#2ae5ff;
     --accent2:#a06bff;--accent3:#34e7b0;
     --border:#78aaff24;--border2:#78aaff38;
     --glow:#2ae5ff2e;--glow2:#a06bff2e;
@@ -20,7 +20,7 @@
   }
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
-  body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',sans-serif;font-weight:300;line-height:1.7;overflow-x:hidden;font-size:16.5px;letter-spacing:-0.005em;}
+  body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',sans-serif;font-weight:400;line-height:1.7;overflow-x:hidden;font-size:16.5px;letter-spacing:-0.005em;}
   body::before{content:'';z-index:0;pointer-events:none;filter:blur(20px);background:radial-gradient(38vw 38vw at 12% 6%,rgba(42,229,255,0.16),transparent 65%),radial-gradient(42vw 42vw at 88% 18%,rgba(160,107,255,0.16),transparent 65%),radial-gradient(40vw 40vw at 55% 92%,rgba(52,231,176,0.1),transparent 65%);animation:aurora 22s ease-in-out infinite alternate;position:fixed;inset:-20vh -10vw;}
   @keyframes aurora{0%{transform:translate(-2%,-1%) scale(1);}50%{transform:translate(2%,2%) scale(1.08);}100%{transform:translate(-1%,1%) scale(1.03);}}
   body::after{content:'';z-index:0;pointer-events:none;opacity:0.5;background-image:linear-gradient(rgba(120,170,255,0.043) 1px,transparent 1px),linear-gradient(90deg,rgba(120,170,255,0.043) 1px,transparent 1px);background-size:68px 68px;position:fixed;inset:0;mask-image:radial-gradient(120vh 120vh at 50% 0px,#000 10%,transparent 78%);}
@@ -146,7 +146,9 @@
   .stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.9rem;}
   .stat-card{background:linear-gradient(160deg,#ffffff0d,#ffffff03),var(--surface-solid);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem 1.4rem;transition:all 0.25s;cursor:default;position:relative;overflow:hidden;isolation:isolate;backdrop-filter:blur(14px) saturate(130%);box-shadow:var(--shadow-soft);}
   .stat-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--glow),transparent);opacity:0;transition:opacity 0.3s;}
-  .stat-card::after{content:'';border-radius:inherit;background:var(--grad);opacity:0;pointer-events:none;z-index:2;padding:1px;transition:opacity 0.35s;position:absolute;inset:0;}
+  .stat-card::after{content:'';border-radius:inherit;background:var(--grad);opacity:0;pointer-events:none;z-index:2;padding:1px;transition:opacity 0.35s;position:absolute;inset:0;-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude;}
+  .stat-label{color:var(--muted);transition:color 0.25s;}
+  .stat-card:hover .stat-label{color:var(--ink);}
   .stat-card:hover{box-shadow:var(--shadow-glow);transform:translateY(-6px);}
   .stat-card:hover::after{opacity:0.9;}
   .stat-card.accent{background:linear-gradient(150deg,#2ae5ff29,#a06bff24),var(--surface-solid);border-color:rgba(42,229,255,0.35);}
@@ -183,6 +185,10 @@
   .divider{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--border2) 20%,#a06bff59 50%,var(--border2) 80%,transparent);max-width:1300px;margin:0 auto;position:relative;z-index:1;}
   .reveal{opacity:0;transform:translateY(36px);transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1),transform 0.8s cubic-bezier(0.16,1,0.3,1);}
   .reveal.visible{opacity:1;transform:none;}
+
+  /* SQL INTRO LAYOUT */
+  .intro-layout{display:grid;grid-template-columns:1.3fr 1fr;gap:2rem;align-items:start;}
+  @media(max-width:900px){.intro-layout{grid-template-columns:1fr;}}
 
   /* ABOUT */
   #about .about-layout{display:grid;grid-template-columns:280px 1fr;gap:4rem;align-items:start;}
@@ -223,6 +229,11 @@
   .timeline-bullets{list-style:none;display:flex;flex-direction:column;gap:0.55rem;}
   .timeline-bullets li{font-size:0.88rem;color:var(--muted);padding-left:1.3rem;position:relative;line-height:1.7;}
   .timeline-bullets li::before{content:'▹';position:absolute;left:0;color:var(--accent);font-size:0.75rem;top:0.18rem;}
+  .timeline-details{max-height:0;overflow:hidden;transition:max-height 0.4s ease,opacity 0.3s;opacity:0;}
+  .timeline-details.open{max-height:900px;opacity:1;margin-top:1rem;}
+  .timeline-toggle{margin-top:0.8rem;display:inline-flex;align-items:center;gap:0.5rem;cursor:pointer;font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--accent);letter-spacing:0.08em;user-select:none;border:1px solid rgba(0,212,255,0.3);border-radius:6px;padding:0.3rem 0.8rem;}
+  .timeline-toggle:hover{color:#33ddff;}
+  .timeline-toggle .cert-toggle-arrow{transition:transform 0.3s;font-size:0.7rem;}
 
   /* PROJECTS */
   #projects .projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:1.4rem;}
@@ -262,6 +273,17 @@
   .cert-img:hover{transform:scale(1.02);}
   .cert-dl-btn{display:inline-flex;align-items:center;gap:0.5rem;font-family:'Space Mono',monospace;font-size:0.68rem;color:#000;background:var(--accent);padding:0.4rem 1rem;border-radius:6px;text-decoration:none;font-weight:600;transition:all 0.2s;}
   .cert-dl-btn:hover{background:#33ddff;box-shadow:0 0 12px var(--glow);}
+
+  /* SLIDESHOW */
+  .slideshow-viewport{position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--border);aspect-ratio:4/3;background:#0a0d1a;}
+  .slideshow-img{width:100%;height:100%;object-fit:cover;cursor:pointer;display:block;}
+  .slideshow-arrow{position:absolute;top:50%;transform:translateY(-50%);width:32px;height:32px;border-radius:50%;background:rgba(5,7,15,0.7);border:1px solid var(--border2);color:var(--ink);font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;backdrop-filter:blur(6px);}
+  .slideshow-arrow:hover{background:var(--accent);color:#000;box-shadow:0 0 12px var(--glow);}
+  .slideshow-arrow.prev{left:0.6rem;}
+  .slideshow-arrow.next{right:0.6rem;}
+  .slideshow-dots{display:flex;justify-content:center;gap:0.4rem;margin-top:0.7rem;}
+  .slideshow-dot{width:6px;height:6px;border-radius:50%;background:var(--border2);cursor:pointer;transition:all 0.2s;}
+  .slideshow-dot.active{background:var(--accent);width:16px;border-radius:3px;}
 
   /* SHERP GALLERY */
   .sherp-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:0.8rem;margin-top:1.2rem;}
@@ -393,6 +415,9 @@
   .project-img-banner .banner-placeholder i{width:2.2rem;height:2.2rem;opacity:0.3;}
   .project-img-banner .banner-placeholder span{font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;}
   .project-card.hidden{display:none;}
+  .project-gh-badge{position:absolute;top:0.7rem;left:0.7rem;width:32px;height:32px;border-radius:50%;background:rgba(5,7,15,0.85);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(-6px);transition:all 0.25s;z-index:2;color:var(--ink);text-decoration:none;}
+  .project-card:hover .project-gh-badge{opacity:1;transform:translateY(0);}
+  .project-gh-badge:hover{background:var(--accent);color:#000;box-shadow:0 0 12px var(--glow);}
 
   /* SKILLS MEGA GRID */
   .skills-mega-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem;}
@@ -411,9 +436,13 @@
   #beyond .beyond-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem;}
   .beyond-card{background:#111827;border:1px solid #1e2d45;border-radius:var(--radius);overflow:hidden;transition:all 0.3s;cursor:default;}
   .beyond-card:hover{border-color:var(--accent);box-shadow:var(--shadow-glow);transform:translateY(-3px);}
-  .beyond-img-wrap{width:100%;height:180px;overflow:hidden;background:linear-gradient(135deg,var(--surface2),rgba(124,58,237,0.1));display:flex;align-items:center;justify-content:center;}
+  .beyond-img-wrap{width:100%;height:180px;overflow:hidden;background:linear-gradient(135deg,var(--surface2),rgba(124,58,237,0.1));display:flex;align-items:center;justify-content:center;position:relative;}
   .beyond-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform 0.4s;}
   .beyond-card:hover .beyond-img-wrap img{transform:scale(1.06);}
+  .beyond-img-wrap .slideshow-viewport{aspect-ratio:unset;height:180px;border:none;border-radius:0;}
+  .beyond-img-wrap .slideshow-arrow{opacity:0;transition:opacity 0.2s;}
+  .beyond-card:hover .beyond-img-wrap .slideshow-arrow{opacity:1;}
+  .beyond-img-wrap .slideshow-dots{position:absolute;bottom:0.5rem;left:0;right:0;margin:0;z-index:2;}
   .beyond-img-wrap i{width:3rem;height:3rem;opacity:0.25;}
   .beyond-body{padding:1.2rem 1.4rem;}
   .beyond-title{font-size:0.95rem;font-weight:600;color:var(--ink);margin-bottom:0.4rem;display:flex;align-items:center;gap:0.5rem;}
@@ -504,32 +533,6 @@
         <div class="stat-label">Projects Shipped</div>
       </div>
     </div>
-    <div class="chart-panel">
-      <div class="chart-panel-head">
-        <span>electricity-demand-forecasting <b>· live model output</b></span>
-        <span class="chart-panel-tag">LightGBM · AWS Fargate</span>
-      </div>
-      <svg class="chart-svg" viewBox="0 0 480 130" preserveAspectRatio="none">
-        <defs>
-          <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#2ae5ff" stop-opacity="0.28"/>
-            <stop offset="100%" stop-color="#2ae5ff" stop-opacity="0"/>
-          </linearGradient>
-          <linearGradient id="chartStroke" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stop-color="#2ae5ff"/>
-            <stop offset="100%" stop-color="#a06bff"/>
-          </linearGradient>
-        </defs>
-        <polygon class="chart-area" points="0,130 0,95 48,90 96,101 144,72 192,79 240,52 288,62 336,38 384,46 432,26 480,33 480,130" fill="url(#chartFill)"/>
-        <polyline class="chart-line" points="0,95 48,90 96,101 144,72 192,79 240,52 288,62 336,38 384,46 432,26 480,33" fill="none" stroke="url(#chartStroke)" stroke-width="2.5"/>
-        <circle class="chart-dot" cx="480" cy="33" r="4.5" fill="#2ae5ff"/>
-      </svg>
-      <div class="chart-kpi-row">
-        <div><span>$34M+</span><small>funding tracked</small></div>
-        <div><span>40%</span><small>forecast accuracy ↑</small></div>
-        <div><span>120K+</span><small>records fine-tuned</small></div>
-      </div>
-    </div>
     <div class="tech-box">
       <div class="tech-box-label">// core stack</div>
       <div class="tech-badge-row">
@@ -556,32 +559,58 @@
 
 <!-- SQL INTRO -->
 <section style="padding:4rem 4rem 2rem;max-width:1300px;margin:0 auto;position:relative;z-index:1;" class="reveal">
-  <div class="section-label">Profile</div>
-  <div class="section-title">Who I <span>am</span></div>
-  <div class="sql-window">
-    <div class="sql-window-bar">
-      <div class="win-hamburger"><div></div><div></div><div></div></div>
-      <span class="win-title">himavarsha_intro.sql</span>
-      <div class="win-controls">
-        <div class="win-ctrl">&#x2500;</div>
-        <div class="win-ctrl">&#x25A1;</div>
-        <div class="win-ctrl close-btn">&#x2715;</div>
+  <div class="intro-layout">
+    <div class="sql-window">
+      <div class="sql-window-bar">
+        <div class="win-hamburger"><div></div><div></div><div></div></div>
+        <span class="win-title">himavarsha_intro.sql</span>
+        <div class="win-controls">
+          <div class="win-ctrl">&#x2500;</div>
+          <div class="win-ctrl">&#x25A1;</div>
+          <div class="win-ctrl close-btn">&#x2715;</div>
+        </div>
+      </div>
+      <div class="sql-body">
+        <div class="sql-line"><span class="sql-num">1</span><span class="sql-code"><span class="kw">WITH</span> data_professionals <span class="kw">AS</span> (</span></div>
+        <div class="sql-line"><span class="sql-num">2</span><span class="sql-code">  <span class="kw">SELECT</span></span></div>
+        <div class="sql-line"><span class="sql-num">3</span><span class="sql-code">    <span class="str">'Himavarsha Sreenivas'</span>  <span class="kw">AS</span> <span class="alias">name</span>,</span></div>
+        <div class="sql-line"><span class="sql-num">4</span><span class="sql-code">    <span class="str">'Houston, TX'</span>           <span class="kw">AS</span> <span class="alias">location</span>,</span></div>
+        <div class="sql-line"><span class="sql-num">5</span><span class="sql-code">    <span class="str">'Data | BI | ML | NLP | Analytics'</span> <span class="kw">AS</span> <span class="alias">role_focus</span>,</span></div>
+        <div class="sql-line"><span class="sql-num">6</span><span class="sql-code">    <span class="str">'M.S. Engineering Data Science @ University of Houston'</span> <span class="kw">AS</span> <span class="alias">education</span>,</span></div>
+        <div class="sql-line"><span class="sql-num">7</span><span class="sql-code">    <span class="str">'3.5 Years'</span>             <span class="kw">AS</span> <span class="alias">experience</span>,</span></div>
+        <div class="sql-line"><span class="sql-num">8</span><span class="sql-code">    <span class="str">'Power BI | Python | SQL | DAX | Azure | LLMs'</span> <span class="kw">AS</span> <span class="alias">core_stack</span>,</span></div>
+        <div class="sql-line"><span class="sql-num">9</span><span class="sql-code">    <span class="str">'EY · UH Law Center · Humana SHERP'</span> <span class="kw">AS</span> <span class="alias">experience_at</span>,</span></div>
+        <div class="sql-line"><span class="sql-num">10</span><span class="sql-code">    <span class="str">'PL-300 · DAAD Scholar · Humana SHERP Fellow'</span> <span class="kw">AS</span> <span class="alias">honors</span>,</span></div>
+        <div class="sql-line"><span class="sql-num">11</span><span class="sql-code">    <span class="str">'Open to Data Scientist, Data Analyst, BI Developer & ML Roles'</span> <span class="kw">AS</span> <span class="alias">status</span></span></div>
+        <div class="sql-line"><span class="sql-num">12</span><span class="sql-code">)</span></div>
+        <div class="sql-line"><span class="sql-num">13</span><span class="sql-code"><span class="kw">SELECT</span> * <span class="kw">FROM</span> data_professionals;</span></div>
       </div>
     </div>
-    <div class="sql-body">
-      <div class="sql-line"><span class="sql-num">1</span><span class="sql-code"><span class="kw">WITH</span> data_professionals <span class="kw">AS</span> (</span></div>
-      <div class="sql-line"><span class="sql-num">2</span><span class="sql-code">  <span class="kw">SELECT</span></span></div>
-      <div class="sql-line"><span class="sql-num">3</span><span class="sql-code">    <span class="str">'Himavarsha Sreenivas'</span>  <span class="kw">AS</span> <span class="alias">name</span>,</span></div>
-      <div class="sql-line"><span class="sql-num">4</span><span class="sql-code">    <span class="str">'Houston, TX'</span>           <span class="kw">AS</span> <span class="alias">location</span>,</span></div>
-      <div class="sql-line"><span class="sql-num">5</span><span class="sql-code">    <span class="str">'Data | BI | ML | NLP | Analytics'</span> <span class="kw">AS</span> <span class="alias">role_focus</span>,</span></div>
-      <div class="sql-line"><span class="sql-num">6</span><span class="sql-code">    <span class="str">'M.S. Engineering Data Science @ University of Houston'</span> <span class="kw">AS</span> <span class="alias">education</span>,</span></div>
-      <div class="sql-line"><span class="sql-num">7</span><span class="sql-code">    <span class="str">'3.5 Years'</span>             <span class="kw">AS</span> <span class="alias">experience</span>,</span></div>
-      <div class="sql-line"><span class="sql-num">8</span><span class="sql-code">    <span class="str">'Power BI | Python | SQL | DAX | Azure | LLMs'</span> <span class="kw">AS</span> <span class="alias">core_stack</span>,</span></div>
-      <div class="sql-line"><span class="sql-num">9</span><span class="sql-code">    <span class="str">'EY · UH Law Center · KPMG · Humana SHERP'</span> <span class="kw">AS</span> <span class="alias">experience_at</span>,</span></div>
-      <div class="sql-line"><span class="sql-num">10</span><span class="sql-code">    <span class="str">'PL-300 · DAAD Scholar · Humana SHERP Fellow'</span> <span class="kw">AS</span> <span class="alias">honors</span>,</span></div>
-      <div class="sql-line"><span class="sql-num">11</span><span class="sql-code">    <span class="str">'Open to Data Scientist, Data Analyst, BI Developer & ML Roles'</span> <span class="kw">AS</span> <span class="alias">status</span></span></div>
-      <div class="sql-line"><span class="sql-num">12</span><span class="sql-code">)</span></div>
-      <div class="sql-line"><span class="sql-num">13</span><span class="sql-code"><span class="kw">SELECT</span> * <span class="kw">FROM</span> data_professionals;</span></div>
+    <div class="chart-panel" style="margin-bottom:0;">
+      <div class="chart-panel-head">
+        <span>electricity-demand-forecasting <b>· live model output</b></span>
+        <span class="chart-panel-tag">LightGBM · AWS Fargate</span>
+      </div>
+      <svg class="chart-svg" viewBox="0 0 480 130" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="chartFill2" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#2ae5ff" stop-opacity="0.28"/>
+            <stop offset="100%" stop-color="#2ae5ff" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="chartStroke2" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#2ae5ff"/>
+            <stop offset="100%" stop-color="#a06bff"/>
+          </linearGradient>
+        </defs>
+        <polygon class="chart-area" points="0,130 0,95 48,90 96,101 144,72 192,79 240,52 288,62 336,38 384,46 432,26 480,33 480,130" fill="url(#chartFill2)"/>
+        <polyline class="chart-line" points="0,95 48,90 96,101 144,72 192,79 240,52 288,62 336,38 384,46 432,26 480,33" fill="none" stroke="url(#chartStroke2)" stroke-width="2.5"/>
+        <circle class="chart-dot" cx="480" cy="33" r="4.5" fill="#2ae5ff"/>
+      </svg>
+      <div class="chart-kpi-row">
+        <div><span>40%</span><small>forecast accuracy ↑</small></div>
+        <div><span>120K+</span><small>records fine-tuned</small></div>
+        <div><span>Live</span><small>project snapshot</small></div>
+      </div>
     </div>
   </div>
 </section>
@@ -597,7 +626,7 @@
       <div class="about-role">// Data Scientist · Analyst · ML Engineer</div>
       <div class="about-badges">
         <span class="about-badge"><i data-lucide="map-pin" style="width:0.75rem;height:0.75rem;vertical-align:middle;margin-right:3px;"></i> Houston, TX</span>
-        <span class="about-badge"><i data-lucide="graduation-cap" style="width:0.75rem;height:0.75rem;vertical-align:middle;margin-right:3px;"></i> GPA 3.9</span>
+        <span class="about-badge"><i data-lucide="graduation-cap" style="width:0.75rem;height:0.75rem;vertical-align:middle;margin-right:3px;"></i> GPA 3.89</span>
         <span class="about-badge"><i data-lucide="globe" style="width:0.75rem;height:0.75rem;vertical-align:middle;margin-right:3px;"></i> DAAD Scholar</span>
         <span class="about-badge"><i data-lucide="heart-pulse" style="width:0.75rem;height:0.75rem;vertical-align:middle;margin-right:3px;"></i> Humana SHERP</span>
         <span class="about-badge"><i data-lucide="bar-chart-2" style="width:0.75rem;height:0.75rem;vertical-align:middle;margin-right:3px;"></i> PL-300</span>
@@ -610,6 +639,14 @@
       <div class="journey-label">// career</div>
       <div class="journey" style="margin-bottom:2.5rem;">
         <div class="journey-item">
+          <div class="journey-dot"><i data-lucide="briefcase" style="width:0.8rem;height:0.8rem;stroke:var(--accent);"></i></div>
+          <div class="journey-content">
+            <div class="journey-year">Jan 2025 – Present</div>
+            <div class="journey-title-text">BI Developer / Data Analyst - University of Houston Law Center</div>
+            <div class="journey-sub">Power BI · DAX · Power Query · RLS · ETL · $34M+ financial reporting</div>
+          </div>
+        </div>
+        <div class="journey-item">
           <div class="journey-dot"><i data-lucide="microscope" style="width:0.8rem;height:0.8rem;stroke:var(--accent);"></i></div>
           <div class="journey-content">
             <div class="journey-year">Summer 2026</div>
@@ -618,27 +655,11 @@
           </div>
         </div>
         <div class="journey-item">
-          <div class="journey-dot"><i data-lucide="briefcase" style="width:0.8rem;height:0.8rem;stroke:var(--accent);"></i></div>
-          <div class="journey-content">
-            <div class="journey-year">Jan 2025 – Present</div>
-            <div class="journey-title-text">Graduate Assistant - University of Houston Law Center</div>
-            <div class="journey-sub">Power BI · DAX · Power Query · RLS · ETL · $34M+ financial reporting</div>
-          </div>
-        </div>
-        <div class="journey-item">
           <div class="journey-dot"><i data-lucide="trending-up" style="width:0.8rem;height:0.8rem;stroke:var(--accent);"></i></div>
           <div class="journey-content">
             <div class="journey-year">2022 – 2024</div>
             <div class="journey-title-text">Associate Analyst - Ernst & Young (EY GDS)</div>
             <div class="journey-sub">ML models · SQL pipelines · Power BI · Led team in Singapore · 2× Spot Award</div>
-          </div>
-        </div>
-        <div class="journey-item">
-          <div class="journey-dot"><i data-lucide="flask-conical" style="width:0.8rem;height:0.8rem;stroke:var(--accent);"></i></div>
-          <div class="journey-content">
-            <div class="journey-year">2020</div>
-            <div class="journey-title-text">Data Analytics Intern - KPMG</div>
-            <div class="journey-sub">Data quality assessments · Statistical analysis · Stakeholder reporting</div>
           </div>
         </div>
         <div class="journey-item">
@@ -659,7 +680,7 @@
           <div class="journey-content" style="border-color:rgba(16,185,129,0.2);">
             <div class="journey-year" style="color:var(--accent3);">2025 – 2026</div>
             <div class="journey-title-text">M.S. Engineering Data Science - University of Houston</div>
-            <div class="journey-sub">GPA 3.9 · Big Data, ML, Database Management, Information Visualization</div>
+            <div class="journey-sub">GPA 3.89 · Big Data, ML, Database Management, Information Visualization</div>
           </div>
         </div>
         <div class="journey-item">
@@ -667,7 +688,7 @@
           <div class="journey-content" style="border-color:rgba(16,185,129,0.2);">
             <div class="journey-year" style="color:var(--accent3);">2018 – 2022</div>
             <div class="journey-title-text">B.E. Computer Science - Visvesvaraya Technological University</div>
-            <div class="journey-sub">GPA 3.4 · Python, Data Structures, AI & ML · Bengaluru, India</div>
+            <div class="journey-sub">GPA 3.6 · Python, Data Structures, AI & ML · Bengaluru, India</div>
           </div>
         </div>
       </div>
@@ -679,8 +700,12 @@
           <div class="journey-dot" style="border-color:var(--accent2);box-shadow:0 0 10px rgba(124,58,237,0.3);"><i data-lucide="globe" style="width:0.8rem;height:0.8rem;stroke:var(--accent2);"></i></div>
           <div class="journey-content" style="border-color:rgba(124,58,237,0.2);">
             <div class="journey-year" style="color:var(--accent2);">2025</div>
-            <div class="journey-title-text">DAAD RISE Professional - Scholar Selectee</div>
-            <div class="journey-sub">German Academic Exchange Service · Competitive international research fellowship in Germany</div>
+            <div class="journey-title-text">DAAD RISE Professional (Research Internship) - Scholar Selectee</div>
+            <div class="journey-sub">German Academic Exchange Service · Competitive international research fellowship in Germany <span style="color:var(--accent2);">{declined}</span></div>
+            <div style="display:flex;gap:0.5rem;margin-top:0.6rem;">
+              <a href="https://www.facebook.com/share/p/1DYTXkzsHg/" target="_blank" style="display:inline-flex;align-items:center;gap:0.35rem;font-family:'Space Mono',monospace;font-size:0.62rem;color:var(--accent2);text-decoration:none;border:1px solid rgba(124,58,237,0.3);border-radius:6px;padding:0.25rem 0.6rem;"><i data-lucide="external-link" style="width:0.6rem;height:0.6rem;"></i> UH Recognition · Facebook</a>
+              <a href="https://www.instagram.com/p/DXZ5jvsjbnk/?img_index=1&igsi=MW45bjBjem50dmE2Yw==" target="_blank" style="display:inline-flex;align-items:center;gap:0.35rem;font-family:'Space Mono',monospace;font-size:0.62rem;color:var(--accent2);text-decoration:none;border:1px solid rgba(124,58,237,0.3);border-radius:6px;padding:0.25rem 0.6rem;"><i data-lucide="external-link" style="width:0.6rem;height:0.6rem;"></i> Instagram</a>
+            </div>
           </div>
         </div>
         <div class="journey-item">
@@ -689,6 +714,13 @@
             <div class="journey-year" style="color:var(--accent2);">2024</div>
             <div class="journey-title-text">2× EY Appreciate Spot Award</div>
             <div class="journey-sub">Ernst & Young · Awarded for outstanding contribution and client delivery</div>
+            <div class="cert-toggle" onclick="toggleSherp(this)" style="margin-top:0.6rem;border:1px solid rgba(124,58,237,0.3);border-radius:6px;padding:0.3rem 0.7rem;color:var(--accent2);width:fit-content;">
+              <span><i data-lucide="image" style="width:0.65rem;height:0.65rem;vertical-align:middle;margin-right:4px;"></i>VIEW AWARD</span>
+              <span class="cert-toggle-arrow">▼</span>
+            </div>
+            <div class="sherp-dropdown" style="max-height:0;overflow:hidden;transition:max-height 0.4s ease,opacity 0.3s;opacity:0;">
+              <img src="ey-spot-award.jpg" alt="EY Spot Award" class="cert-img" style="margin-top:0.8rem;max-width:240px;" onclick="openLightbox(this.src)" onerror="this.style.display='none';"/>
+            </div>
           </div>
         </div>
         <div class="journey-item">
@@ -697,6 +729,7 @@
             <div class="journey-year" style="color:var(--accent2);">2024</div>
             <div class="journey-title-text">EY Data Analytics & Visualization Bronze Badges</div>
             <div class="journey-sub">Ernst & Young · Credly Verified · Data Analytics + Data Visualization</div>
+            <a href="https://www.credly.com/org/ey/badge/ey-analytics-data-science-bronze-2021" target="_blank" style="display:inline-flex;align-items:center;gap:0.35rem;font-family:'Space Mono',monospace;font-size:0.62rem;color:var(--accent2);text-decoration:none;border:1px solid rgba(124,58,237,0.3);border-radius:6px;padding:0.25rem 0.6rem;margin-top:0.6rem;width:fit-content;"><i data-lucide="external-link" style="width:0.6rem;height:0.6rem;"></i> View on Credly</a>
           </div>
         </div>
         <div class="journey-item">
@@ -730,11 +763,13 @@
           </div>
           <span class="timeline-period">Jan 2025 – Present</span>
         </div>
-        <div class="timeline-role">BI Developer / Graduate Assistant · Part-time · Houston, TX</div>
+        <div class="timeline-role">BI Developer / Data Analyst · Part-time · Houston, TX</div>
+        <div class="timeline-toggle" onclick="toggleTimeline(this)"><span>VIEW RESPONSIBILITIES</span><span class="cert-toggle-arrow">▼</span></div>
+        <div class="timeline-details">
         <ul class="timeline-bullets">
-          <li>Design and build a Power BI financial reporting environment for a dean-level audience - including a Detailed Chartfield Report (DCR) dashboard reconciling GL actuals, encumbrances, and budget data across 35 departments totaling $34M+ in approved funding</li>
-          <li>Develop the underlying data model across 10+ source tables (budget, GL, chartfield, payroll), writing DAX measures and Power Query transformations to support drill-down reporting by department, account, and journal</li>
-          <li>Implement row-level security (RLS) across multiple stakeholder roles so each sees only their appropriately scoped data; validate figures against official university financial statements line by line</li>
+          <li>As a Graduate Assistant, designed and built a Power BI financial reporting environment for a dean-level audience, including developing the underlying data model across 10+ source tables writing DAX measures and Power Query transformations to support drill-down reporting by department, account, and journal across 35 departments totaling $34M+ in approved funding</li>
+          <li>Implemented row-level security (RLS) across multiple stakeholder roles, reducing manual data-scoping and access-review effort by ~30% and ensuring appropriate data scoping per department</li>
+          <li>Validated reported figures against official university financial statements line by line, improving reporting accuracy and reducing discrepancy-resolution time by ~25%</li>
         </ul>
         <div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:1rem;">
           <span class="exp-skill-tag">Financial Data Analysis</span>
@@ -743,6 +778,7 @@
           <span class="exp-skill-tag">Data Engineering</span>
           <span class="exp-skill-tag">RLS</span>
           <span class="exp-skill-tag">ETL</span>
+        </div>
         </div>
       </div>
     </div>
@@ -762,10 +798,13 @@
           <span class="timeline-period">Aug 2022 – Dec 2024</span>
         </div>
         <div class="timeline-role">Associate Analyst · Full-time · Bengaluru, India</div>
+        <div class="timeline-toggle" onclick="toggleTimeline(this)"><span>VIEW RESPONSIBILITIES</span><span class="cert-toggle-arrow">▼</span></div>
+        <div class="timeline-details">
         <ul class="timeline-bullets">
-          <li>Developed predictive models for lead scoring and customer segmentation using Python (TensorFlow, Keras, Scikit-learn) - improved forecast accuracy by 40%</li>
+          <li>Developed predictive and optimization models for lead scoring and customer segmentation using Python (NumPy, Keras, TensorFlow, Scikit-learn, SpaCy), improving forecast accuracy by 40%</li>
           <li>Wrote custom SQL procedures in MySQL to clean, join, and aggregate multi-source datasets, reducing manual reporting effort by 30%</li>
-          <li>Led a 4-member team onsite in Singapore to deliver a custom analytics dashboard under Agile sprints; earned EY Data Analytics & Visualization Bronze Badges and 2× EY Spot Awards</li>
+          <li>Applied hypothesis testing and A/B testing to validate client solutions, improving model deployment confidence and cutting post-deployment revisions by ~20%</li>
+          <li>Led a 4-member team onsite in Singapore to deliver a custom analytics dashboard under Agile sprints, managing last-minute client requests and delivering data-driven insights through visual presentations, accelerating stakeholder decision-making cycles by ~15%</li>
         </ul>
         <div style="display:flex;gap:0.5rem;margin-top:1rem;flex-wrap:wrap;">
           <img src="badge-ey-analytics.jpeg" alt="EY Analytics Badge" style="height:52px;width:52px;border-radius:6px;object-fit:cover;border:1px solid var(--border);cursor:pointer;" onclick="openLightbox(this.src)"/>
@@ -779,6 +818,7 @@
           <span class="exp-skill-tag">Power BI</span>
           <span class="exp-skill-tag">Agile</span>
         </div>
+        </div>
       </div>
     </div>
     <div class="timeline-item">
@@ -786,14 +826,14 @@
       <div class="timeline-body">
         <div class="timeline-meta">
           <div style="display:flex;align-items:center;gap:0.8rem;">
-            <div style="height:36px;width:36px;border-radius:6px;background:#1a0a0a;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid #3a1a1a;">
-              <i data-lucide="heart-pulse" style="width:1.1rem;height:1.1rem;stroke:#e53e3e;"></i>
-            </div>
+            <img src="humana-logo.png" alt="Humana Institute" style="height:36px;width:36px;border-radius:6px;object-fit:contain;background:#fff;padding:4px;flex-shrink:0;"/>
             <span class="timeline-company">Humana Institute - University of Houston</span>
           </div>
           <span class="timeline-period">Summer 2026</span>
         </div>
         <div class="timeline-role">SHERP Research Fellow · On-site · Houston, TX</div>
+        <div class="timeline-toggle" onclick="toggleTimeline(this)"><span>VIEW RESPONSIBILITIES</span><span class="cert-toggle-arrow">▼</span></div>
+        <div class="timeline-details">
         <ul class="timeline-bullets">
           <li>Selected for the 2026 Summer Health Equity Research Program (SHERP) at Humana Institute, UH - a competitive health equity research program</li>
           <li>Contributed to the development of <em>Luna</em> - a mother-centered mobile health app to improve maternal knowledge, resources, and engagement for underserved communities</li>
@@ -807,11 +847,13 @@
           <a href="https://www.linkedin.com/posts/himavarshas_sherp2026-maternalhealth-humana-ugcPost-7477110553404944384-f_Za/?utm_source=share&utm_medium=member_desktop&rcm=ACoAADGdrg4BEMf1MhojIuFzhg_Su7f0f_hLIRg" target="_blank" style="display:inline-flex;align-items:center;gap:0.4rem;font-family:'Space Mono',monospace;font-size:0.68rem;color:var(--accent);text-decoration:none;border:1px solid rgba(0,212,255,0.3);border-radius:6px;padding:0.3rem 0.8rem;"><i data-lucide="linkedin" style="width:0.7rem;height:0.7rem;"></i> View Post</a>
         </div>
         <div class="sherp-dropdown" style="max-height:0;overflow:hidden;transition:max-height 0.4s ease,opacity 0.3s;opacity:0;">
-          <div class="sherp-gallery" style="margin-top:1rem;">
-            <img src="sherp-cohort.jpeg" alt="SHERP Cohort" class="wide" onclick="openLightbox(this.src)"/>
-            <img src="sherp-team.jpeg" alt="SHERP Team" onclick="openLightbox(this.src)"/>
-            <img src="sherp-poster.jpeg" alt="SHERP Poster Presentation" class="wide" onclick="openLightbox(this.src)"/>
-            <img src="sherp-cert.jpeg" alt="SHERP Certificate" onclick="openLightbox(this.src)"/>
+          <div class="slideshow" data-images="sherp-cohort.jpeg,sherp-team.jpeg,sherp-poster.jpeg,sherp-cert.jpeg" style="margin-top:1rem;">
+            <div class="slideshow-viewport">
+              <img class="slideshow-img" src="sherp-cohort.jpeg" alt="SHERP" onclick="openLightbox(this.src)"/>
+              <button class="slideshow-arrow prev" onclick="slideMove(this,-1)">‹</button>
+              <button class="slideshow-arrow next" onclick="slideMove(this,1)">›</button>
+            </div>
+            <div class="slideshow-dots"></div>
           </div>
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.8rem;">
@@ -821,34 +863,10 @@
           <span class="exp-skill-tag">Research</span>
           <span class="exp-skill-tag">Health Equity</span>
         </div>
+        </div>
       </div>
     </div>
 
-    <div class="timeline-item">
-      <div class="timeline-dot"></div>
-      <div class="timeline-body">
-        <div class="timeline-meta">
-          <div style="display:flex;align-items:center;gap:0.8rem;">
-            <div style="height:36px;width:36px;border-radius:6px;background:#00338d;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <span style="font-family:Arial Black,sans-serif;font-size:0.75rem;font-weight:900;color:#fff;letter-spacing:-0.5px;">KPMG</span>
-            </div>
-            <span class="timeline-company">KPMG</span>
-          </div>
-          <span class="timeline-period">Aug 2020</span>
-        </div>
-        <div class="timeline-role">Data Analytics Intern · Bengaluru, India</div>
-        <ul class="timeline-bullets">
-          <li>Conducted data quality assessments using Excel (VLOOKUP), linear regression, and ANOVA to identify variable relationships</li>
-          <li>Delivered visual insights through charts and statistical outputs to support client decision-making</li>
-        </ul>
-        <div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:1rem;">
-          <span class="exp-skill-tag">Data Analytics</span>
-          <span class="exp-skill-tag">Excel</span>
-          <span class="exp-skill-tag">Statistical Analysis</span>
-          <span class="exp-skill-tag">Data Visualization</span>
-        </div>
-      </div>
-    </div>
     <div class="timeline-item">
       <div class="timeline-dot"></div>
       <div class="timeline-body">
@@ -862,9 +880,11 @@
           <span class="timeline-period">Jun – Jul 2020</span>
         </div>
         <div class="timeline-role">Data Science Intern · Bengaluru, India</div>
+        <div class="timeline-toggle" onclick="toggleTimeline(this)"><span>VIEW RESPONSIBILITIES</span><span class="cert-toggle-arrow">▼</span></div>
+        <div class="timeline-details">
         <ul class="timeline-bullets">
-          <li>Processed customer and retail datasets using Python and MySQL; built neural networks with TensorFlow and Keras</li>
-          <li>Enhanced client ML algorithms with Scikit-learn, developing scalable predictive forecasting solutions</li>
+          <li>Enhanced a client's ML algorithm and built forecasting models using Python (Scikit-learn, TensorFlow, Keras, Pandas, NumPy) on customer and retail market data processed in MySQL, improving model performance by ~15%</li>
+          <li>Conducted data quality assessments in Excel (VLOOKUP) and applied linear regression and ANOVA, identifying data relationships that improved analysis accuracy by ~10%</li>
         </ul>
         <div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:1rem;">
           <span class="exp-skill-tag">Python</span>
@@ -872,6 +892,7 @@
           <span class="exp-skill-tag">Keras</span>
           <span class="exp-skill-tag">MySQL</span>
           <span class="exp-skill-tag">Machine Learning</span>
+        </div>
         </div>
       </div>
     </div>
@@ -892,71 +913,71 @@
     <button class="filter-btn" onclick="filterProjects(this,'db')"><i data-lucide="database" style="width:0.75rem;height:0.75rem;"></i>Database</button>
   </div>
   <div class="projects-grid">
-    <div class="project-card hover-lift" data-cat="db">
+    <div class="project-card hover-lift" data-cat="ml bi">
       <div class="project-num">01</div>
       <div class="project-img-banner">
-        <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&q=80" alt="PulseBeat Music" onerror="this.parentElement.innerHTML='<div class=\'banner-placeholder\'><i data-lucide=\'music\' style=\'stroke:var(--accent);\'></i><span>Database · Full Stack</span></div>';lucide.createIcons();">
+        <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=600&q=80" alt="Electricity" onerror="this.parentElement.innerHTML='<div class=\'banner-placeholder\'><i data-lucide=\'zap\' style=\'stroke:var(--accent3);\'></i><span>Energy Analytics</span></div>';lucide.createIcons();">
+        <a href="https://github.com/hima24/electricity-forecasting-aws" target="_blank" class="project-gh-badge" title="View on GitHub"><i data-lucide="github" style="width:1rem;height:1rem;"></i></a>
       </div>
-      <div class="project-tag">// Database · SQL · Full Stack</div>
-      <div class="project-title"><a href="https://github.com/hima24" target="_blank" style="color:inherit;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='inherit'">PulseBeat - Music Recommendation Platform ↗</a></div>
-      <div class="project-desc">Designed a normalized (3NF) MySQL schema with views, stored procedures, and triggers. Built a Streamlit + Python frontend with login, recommendations, and an admin dashboard - part of a 5-person team.</div>
-      <div class="project-techs"><span class="project-tech">MySQL</span><span class="project-tech">Python</span><span class="project-tech">Streamlit</span><span class="project-tech">SQL</span></div>
-      <div class="project-footer"><a href="https://github.com/hima24" target="_blank" class="btn-github"><i data-lucide="github" style="width:0.75rem;height:0.75rem;"></i> View Code</a></div>
+      <div class="project-tag">// Energy Analytics</div>
+      <div class="project-title"><a href="https://github.com/hima24/electricity-forecasting-aws" target="_blank" style="color:inherit;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='inherit'">Electricity Demand Forecasting ↗</a></div>
+      <div class="project-desc">Built and deployed an end-to-end forecasting pipeline (ENTSO-E + OpenWeatherMap APIs, LightGBM model) as containerized services on AWS ECS/Fargate, with a Streamlit dashboard, EFS-backed persistent storage, and Secrets Manager/IAM for secure credential handling. Includes a Financial Goal Tracker translating live forecasts into personal electricity cost estimates with configurable budget goals.</div>
+      <div class="project-techs"><span class="project-tech">XGBoost</span><span class="project-tech">Random Forest</span><span class="project-tech">Python</span><span class="project-tech">AWS Fargate</span></div>
     </div>
-    <div class="project-card hover-lift" data-cat="bi">
+    <div class="project-card hover-lift" data-cat="db">
       <div class="project-num">02</div>
       <div class="project-img-banner">
-        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80" alt="Sales Dashboard" onerror="this.parentElement.innerHTML='<div class=\'banner-placeholder\'><i data-lucide=\'bar-chart-2\' style=\'stroke:var(--accent);\'></i><span>Business Intelligence</span></div>';lucide.createIcons();">
+        <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&q=80" alt="PulseBeat Music" onerror="this.parentElement.innerHTML='<div class=\'banner-placeholder\'><i data-lucide=\'music\' style=\'stroke:var(--accent);\'></i><span>Database · Full Stack</span></div>';lucide.createIcons();">
+        <a href="https://github.com/hima24/pulsebeat" target="_blank" class="project-gh-badge" title="View on GitHub"><i data-lucide="github" style="width:1rem;height:1rem;"></i></a>
       </div>
-      <div class="project-tag">// Business Intelligence</div>
-      <div class="project-title"><a href="https://github.com/hima24" target="_blank" style="color:inherit;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='inherit'">Sales Performance Dashboard ↗</a></div>
-      <div class="project-desc">Interactive Power BI dashboard analyzing 50K+ transactions across regional sales, profitability, and customer trends. DAX KPIs, drill-throughs, and real-time SQL Server refresh improved reporting efficiency by 35%.</div>
-      <div class="project-techs"><span class="project-tech">Power BI</span><span class="project-tech">DAX</span><span class="project-tech">SQL Server</span><span class="project-tech">Excel</span></div>
-      <div class="project-footer"><a href="https://github.com/hima24" target="_blank" class="btn-github"><i data-lucide="github" style="width:0.75rem;height:0.75rem;"></i> View Code</a></div>
+      <div class="project-tag">// Database · SQL · Full Stack</div>
+      <div class="project-title"><a href="https://github.com/hima24/pulsebeat" target="_blank" style="color:inherit;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='inherit'">PulseBeat - Music Recommendation Platform ↗</a></div>
+      <div class="project-desc">Designed a normalized (3NF) MySQL schema with views, stored procedures, and triggers to power personalized recommendations, playlists, and ratings. Built a Streamlit + Python frontend with user login, a recommendation engine, and an admin analytics dashboard.</div>
+      <div class="project-techs"><span class="project-tech">MySQL</span><span class="project-tech">Python</span><span class="project-tech">Streamlit</span><span class="project-tech">SQL</span></div>
     </div>
     <div class="project-card hover-lift" data-cat="nlp">
       <div class="project-num">03</div>
       <div class="project-img-banner">
         <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&q=80" alt="NLP News" onerror="this.parentElement.innerHTML='<div class=\'banner-placeholder\'><i data-lucide=\'file-text\' style=\'stroke:var(--accent2);\'></i><span>NLP · Transformers</span></div>';lucide.createIcons();">
+        <a href="https://github.com/hima24/ag-news-headline-generation" target="_blank" class="project-gh-badge" title="View on GitHub"><i data-lucide="github" style="width:1rem;height:1rem;"></i></a>
       </div>
       <div class="project-tag">// NLP · Transformers</div>
-      <div class="project-title"><a href="https://github.com/hima24" target="_blank" style="color:inherit;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='inherit'">AG News Topic Classification & Headline Generation ↗</a></div>
-      <div class="project-desc">Fine-tuned DistilBERT for topic classification (94% accuracy) and T5-base for headline generation (ROUGE-L 76.81%, BERTScore 94.68%) on 120K+ news records - 3-person NLP team.</div>
+      <div class="project-title"><a href="https://github.com/hima24/ag-news-headline-generation" target="_blank" style="color:inherit;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='inherit'">AG News Topic Classification & Headline Generation ↗</a></div>
+      <div class="project-desc">Fine-tuned T5-base (223M params) for abstractive headline generation on AG News articles, benchmarking against DistilBART and PEGASUS across four decoding strategies. Achieved ROUGE-L 76.81% and BERTScore 94.68% on 120K+ news records.</div>
       <div class="project-techs"><span class="project-tech">DistilBERT</span><span class="project-tech">T5</span><span class="project-tech">PEGASUS</span><span class="project-tech">HuggingFace</span></div>
-      <div class="project-footer"><a href="https://github.com/hima24" target="_blank" class="btn-github"><i data-lucide="github" style="width:0.75rem;height:0.75rem;"></i> View Code</a></div>
     </div>
     <div class="project-card hover-lift" data-cat="ml">
       <div class="project-num">04</div>
       <div class="project-img-banner">
         <img src="https://images.unsplash.com/photo-1611605698335-8b1569810432?w=600&q=80" alt="Twitter Location" onerror="this.parentElement.innerHTML='<div class=\'banner-placeholder\'><i data-lucide=\'map-pin\' style=\'stroke:var(--accent2);\'></i><span>Machine Learning</span></div>';lucide.createIcons();">
+        <a href="https://github.com/hima24/twitter-location-prediction" target="_blank" class="project-gh-badge" title="View on GitHub"><i data-lucide="github" style="width:1rem;height:1rem;"></i></a>
       </div>
       <div class="project-tag">// Machine Learning</div>
-      <div class="project-title"><a href="https://github.com/hima24" target="_blank" style="color:inherit;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='inherit'">User Location Prediction on Twitter ↗</a></div>
-      <div class="project-desc">Ensemble geolocation prediction models using Tweepy API and XGBoost, CatBoost, AdaBoost, Random Forest - 40% accuracy improvement through feature engineering and statistical validation.</div>
+      <div class="project-title"><a href="https://github.com/hima24/twitter-location-prediction" target="_blank" style="color:inherit;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='inherit'">User Location Prediction on Twitter ↗</a></div>
+      <div class="project-desc">Ensemble geolocation prediction models using the Tweepy API and XGBoost, CatBoost, AdaBoost, and Random Forest - 40% accuracy improvement through feature engineering and statistical validation.</div>
       <div class="project-techs"><span class="project-tech">XGBoost</span><span class="project-tech">CatBoost</span><span class="project-tech">Tweepy</span><span class="project-tech">Scikit-learn</span></div>
-      <div class="project-footer"><a href="https://github.com/hima24" target="_blank" class="btn-github"><i data-lucide="github" style="width:0.75rem;height:0.75rem;"></i> View Code</a></div>
     </div>
     <div class="project-card hover-lift" data-cat="nlp ml">
       <div class="project-num">05</div>
       <div class="project-img-banner">
         <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&q=80" alt="Fake News" onerror="this.parentElement.innerHTML='<div class=\'banner-placeholder\'><i data-lucide=\'shield-alert\' style=\'stroke:var(--accent3);\'></i><span>Text Classification</span></div>';lucide.createIcons();">
+        <a href="https://github.com/hima24/Fake-News-Detector" target="_blank" class="project-gh-badge" title="View on GitHub"><i data-lucide="github" style="width:1rem;height:1rem;"></i></a>
       </div>
       <div class="project-tag">// Text Classification</div>
-      <div class="project-title"><a href="https://github.com/hima24" target="_blank" style="color:inherit;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='inherit'">Fake News Detection ↗</a></div>
-      <div class="project-desc">Fake news classifier using TF-IDF vectorization and Passive Aggressive Classifier achieving 90% accuracy. Full EDA, feature engineering, hyperparameter tuning, and cross-validation to address dataset imbalances.</div>
+      <div class="project-title"><a href="https://github.com/hima24/Fake-News-Detector" target="_blank" style="color:inherit;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='inherit'">Fake News Detection ↗</a></div>
+      <div class="project-desc">Fake news classifier using TF-IDF vectorization and a Passive Aggressive Classifier achieving 90% accuracy. Full EDA, feature engineering, hyperparameter tuning, and cross-validation to address dataset imbalances.</div>
       <div class="project-techs"><span class="project-tech">TF-IDF</span><span class="project-tech">NLTK</span><span class="project-tech">Scikit-learn</span><span class="project-tech">Pandas</span></div>
-      <div class="project-footer"><a href="https://github.com/hima24" target="_blank" class="btn-github"><i data-lucide="github" style="width:0.75rem;height:0.75rem;"></i> View Code</a></div>
     </div>
-    <div class="project-card hover-lift" data-cat="ml bi">
+    <div class="project-card hover-lift" data-cat="bi">
       <div class="project-num">06</div>
       <div class="project-img-banner">
-        <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=600&q=80" alt="Electricity" onerror="this.parentElement.innerHTML='<div class=\'banner-placeholder\'><i data-lucide=\'zap\' style=\'stroke:var(--accent3);\'></i><span>Energy Analytics</span></div>';lucide.createIcons();">
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80" alt="Sales Dashboard" onerror="this.parentElement.innerHTML='<div class=\'banner-placeholder\'><i data-lucide=\'bar-chart-2\' style=\'stroke:var(--accent);\'></i><span>Business Intelligence</span></div>';lucide.createIcons();">
+        <a href="https://github.com/hima24" target="_blank" class="project-gh-badge" title="View on GitHub"><i data-lucide="github" style="width:1rem;height:1rem;"></i></a>
       </div>
-      <div class="project-tag">// Energy Analytics</div>
-      <div class="project-title"><a href="https://github.com/hima24" target="_blank" style="color:inherit;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='inherit'">Electricity Demand Forecasting ↗</a></div>
-      <div class="project-desc">Short-term hourly electricity demand forecasting combining historical load, energy generation, market price signals, and weather variables. XGBoost, Random Forest, and Linear Regression evaluated on MAE, RMSE, MAPE, and R².</div>
-      <div class="project-techs"><span class="project-tech">XGBoost</span><span class="project-tech">Random Forest</span><span class="project-tech">Python</span><span class="project-tech">Feature Engineering</span></div>
-      <div class="project-footer"><a href="https://github.com/hima24" target="_blank" class="btn-github"><i data-lucide="github" style="width:0.75rem;height:0.75rem;"></i> View Code</a></div>
+      <div class="project-tag">// Business Intelligence</div>
+      <div class="project-title"><a href="https://github.com/hima24" target="_blank" style="color:inherit;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='inherit'">Sales Performance Dashboard ↗</a></div>
+      <div class="project-desc">Interactive Power BI dashboard analyzing 50K+ transactions across regional sales, profitability, and customer trends. DAX KPIs, drill-throughs, and real-time SQL Server refresh improved reporting efficiency by 35%.</div>
+      <div class="project-techs"><span class="project-tech">Power BI</span><span class="project-tech">DAX</span><span class="project-tech">SQL Server</span><span class="project-tech">Excel</span></div>
     </div>
   </div>
 </section>
@@ -965,8 +986,8 @@
 
 <!-- CERTIFICATIONS -->
 <section id="certifications" class="reveal">
-  <div class="section-label">Certifications</div>
-  <div class="section-title">My <span>credentials</span></div>
+  <div class="section-label">Honors & Certifications</div>
+  <div class="section-title">Honors & <span>Certifications</span></div>
   <div class="certs-grid">
 
     <!-- PL-300 -->
@@ -1040,7 +1061,7 @@
       <div class="cert-card-top">
         <div class="cert-icon gcp"><i data-lucide="cloud" style="width:1.5rem;height:1.5rem;stroke:#4285f4;"></i></div>
         <div class="cert-body">
-          <div class="cert-name">Google Cloud Architecting Specialization</div>
+          <div class="cert-name">Google Compute Engine Specialization</div>
           <div class="cert-issuer">Google Cloud · Coursera</div>
           <span class="cert-badge"><i data-lucide="check-circle" style="width:0.6rem;height:0.6rem;vertical-align:middle;margin-right:2px;stroke:var(--accent3);"></i> Completed</span>
         </div>
@@ -1117,6 +1138,18 @@
         <div class="cert-dropdown-inner">
           <a href="https://www.facebook.com/share/p/1DYTXkzsHg/" target="_blank" class="cert-dl-btn"><i data-lucide="external-link" style="width:0.7rem;height:0.7rem;"></i> Facebook</a>
           <a href="https://www.instagram.com/p/DXZ5jvsjbnk/?img_index=1&igsi=MW45bjBjem50dmE2Yw==" target="_blank" class="cert-dl-btn"><i data-lucide="external-link" style="width:0.7rem;height:0.7rem;"></i> Instagram</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Python Programming -->
+    <div class="cert-card hover-lift">
+      <div class="cert-card-top">
+        <div class="cert-icon" style="background:rgba(0,212,255,0.1);"><i data-lucide="code-2" style="width:1.5rem;height:1.5rem;stroke:var(--accent);"></i></div>
+        <div class="cert-body">
+          <div class="cert-name">Python Programming</div>
+          <div class="cert-issuer">NSDC / ITM Edutech · Internshala</div>
+          <span class="cert-badge"><i data-lucide="check-circle" style="width:0.6rem;height:0.6rem;vertical-align:middle;margin-right:2px;stroke:var(--accent3);"></i> Completed</span>
         </div>
       </div>
     </div>
@@ -1211,7 +1244,14 @@
   <div class="beyond-grid">
     <div class="beyond-card">
       <div class="beyond-img-wrap">
-        <img src="https://images.unsplash.com/photo-1488085061387-422e29b40080?w=700&q=80" alt="Travel"/>
+        <div class="slideshow" data-images="travel-1.jpeg,travel-2.jpeg,travel-3.jpeg">
+          <div class="slideshow-viewport">
+            <img class="slideshow-img" src="travel-1.jpeg" alt="Travel" onclick="openLightbox(this.src)"/>
+            <button class="slideshow-arrow prev" onclick="slideMove(this,-1)">‹</button>
+            <button class="slideshow-arrow next" onclick="slideMove(this,1)">›</button>
+          </div>
+          <div class="slideshow-dots"></div>
+        </div>
       </div>
       <div class="beyond-body">
         <div class="beyond-title"><i data-lucide="map-pin" style="stroke:var(--accent);"></i> Travel & Exploration</div>
@@ -1220,7 +1260,14 @@
     </div>
     <div class="beyond-card">
       <div class="beyond-img-wrap">
-        <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=700&q=80" alt="Photography"/>
+        <div class="slideshow" data-images="photography-1.jpeg,photography-2.jpeg,photography-3.jpeg,photography-4.jpeg">
+          <div class="slideshow-viewport">
+            <img class="slideshow-img" src="photography-1.jpeg" alt="Photography" onclick="openLightbox(this.src)"/>
+            <button class="slideshow-arrow prev" onclick="slideMove(this,-1)">‹</button>
+            <button class="slideshow-arrow next" onclick="slideMove(this,1)">›</button>
+          </div>
+          <div class="slideshow-dots"></div>
+        </div>
       </div>
       <div class="beyond-body">
         <div class="beyond-title"><i data-lucide="camera" style="stroke:var(--accent);"></i> Photography</div>
@@ -1229,7 +1276,14 @@
     </div>
     <div class="beyond-card">
       <div class="beyond-img-wrap">
-        <img src="https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=700&q=80" alt="Pets"/>
+        <div class="slideshow" data-images="pets-1.jpeg,pets-2.jpeg,pets-3.jpeg">
+          <div class="slideshow-viewport">
+            <img class="slideshow-img" src="pets-1.jpeg" alt="Pets" onclick="openLightbox(this.src)"/>
+            <button class="slideshow-arrow prev" onclick="slideMove(this,-1)">‹</button>
+            <button class="slideshow-arrow next" onclick="slideMove(this,1)">›</button>
+          </div>
+          <div class="slideshow-dots"></div>
+        </div>
       </div>
       <div class="beyond-body">
         <div class="beyond-title"><i data-lucide="heart" style="stroke:var(--accent);"></i> Pets & Animals</div>
@@ -1238,7 +1292,14 @@
     </div>
     <div class="beyond-card">
       <div class="beyond-img-wrap">
-        <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=700&q=80" alt="Cooking"/>
+        <div class="slideshow" data-images="cooking-1.jpeg,cooking-2.jpeg,cooking-3.jpeg">
+          <div class="slideshow-viewport">
+            <img class="slideshow-img" src="cooking-1.jpeg" alt="Cooking" onclick="openLightbox(this.src)"/>
+            <button class="slideshow-arrow prev" onclick="slideMove(this,-1)">‹</button>
+            <button class="slideshow-arrow next" onclick="slideMove(this,1)">›</button>
+          </div>
+          <div class="slideshow-dots"></div>
+        </div>
       </div>
       <div class="beyond-body">
         <div class="beyond-title"><i data-lucide="utensils" style="stroke:var(--accent);"></i> Cooking & Food Exploration</div>
@@ -1254,8 +1315,9 @@
 <section id="contact" class="reveal">
   <div class="contact-inner">
     <div class="contact-left">
-      <h2>Let's work <span>together.</span></h2>
+      <h2>Let's talk <span>data.</span></h2>
       <p>Seeking opportunities in Data Science, Analytics, and Business Intelligence. Let's connect!</p>
+      <div class="about-badge" style="display:inline-flex;margin-bottom:1.4rem;"><i data-lucide="map-pin" style="width:0.75rem;height:0.75rem;vertical-align:middle;margin-right:4px;"></i> Houston, TX · Open to Relocate</div>
       <div class="contact-links">
         <a href="mailto:himavarsha.2403@gmail.com" class="contact-link"><span class="contact-link-icon"><i data-lucide="mail" style="width:1rem;height:1rem;stroke:var(--accent);"></i></span> himavarsha.2403@gmail.com</a>
       <a href="https://www.linkedin.com/in/himavarshas" target="_blank" class="contact-link"><span class="contact-link-icon"><svg width="16" height="16" fill="var(--accent)" style="width:1rem;height:1rem;" viewBox="0 0 16 16">
@@ -1294,8 +1356,8 @@
     <div class="footer-col">
       <h4>Connect</h4>
       <ul>
-        <li><a href="https://www.linkedin.com/in/himavarshas" target="_blank"><i data-lucide="linkedin"></i>LinkedIn</a></li>
-        <li><a href="https://github.com/hima24" target="_blank"><i data-lucide="github"></i>GitHub</a></li>
+        <li><a href="https://www.linkedin.com/in/himavarshas" target="_blank"><svg width="13" height="13" fill="var(--accent)" viewBox="0 0 16 16"><path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z"/></svg>LinkedIn</a></li>
+        <li><a href="https://github.com/hima24" target="_blank"><svg width="13" height="13" fill="var(--accent)" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/></svg>GitHub</a></li>
         <li><a href="mailto:himavarsha.2403@gmail.com"><i data-lucide="mail"></i>Email</a></li>
         <li><a href="resume.pdf" download><i data-lucide="download"></i>Resume</a></li>
       </ul>
@@ -1303,7 +1365,7 @@
   </div>
   <div class="footer-bottom">
     <p>© 2026 Himavarsha Sreenivas · Built with passion ✦</p>
-    <p>Houston, TX · Open to opportunities</p>
+    <p style="display:inline-flex;align-items:center;gap:0.35rem;"><i data-lucide="map-pin" style="width:0.7rem;height:0.7rem;stroke:var(--accent);"></i> Houston, TX · Open to Relocate</p>
   </div>
 </footer>
 
@@ -1366,8 +1428,53 @@
 </div>
 
 <script>
+function toggleTimeline(toggleEl) {
+  const details = toggleEl.nextElementSibling;
+  const arrow = toggleEl.querySelector('.cert-toggle-arrow');
+  const isOpen = details.classList.contains('open');
+  if (isOpen) {
+    details.classList.remove('open');
+    arrow.style.transform = 'rotate(0deg)';
+  } else {
+    details.classList.add('open');
+    arrow.style.transform = 'rotate(180deg)';
+    if(window.lucide) lucide.createIcons();
+  }
+}
+
+// SLIDESHOW
+function initSlideshows(){
+  document.querySelectorAll('.slideshow').forEach(sw=>{
+    if(sw.dataset.init)return;
+    sw.dataset.init='1';
+    const imgs=sw.dataset.images.split(',');
+    const dotsWrap=sw.querySelector('.slideshow-dots');
+    imgs.forEach((_,i)=>{
+      const d=document.createElement('div');
+      d.className='slideshow-dot'+(i===0?' active':'');
+      d.onclick=()=>setSlide(sw,i);
+      dotsWrap.appendChild(d);
+    });
+    sw.dataset.idx='0';
+  });
+}
+function setSlide(sw,idx){
+  const imgs=sw.dataset.images.split(',');
+  idx=(idx+imgs.length)%imgs.length;
+  sw.dataset.idx=idx;
+  sw.querySelector('.slideshow-img').src=imgs[idx];
+  sw.querySelectorAll('.slideshow-dot').forEach((d,i)=>d.classList.toggle('active',i===idx));
+}
+function slideMove(btn,dir){
+  const sw=btn.closest('.slideshow');
+  setSlide(sw,parseInt(sw.dataset.idx)+dir);
+}
+document.addEventListener('DOMContentLoaded',initSlideshows);
+window.addEventListener('load',initSlideshows);
+
 function toggleSherp(toggleEl) {
-  const dropdown = toggleEl.closest('.timeline-body').querySelector('.sherp-dropdown');
+  const container = toggleEl.closest('.timeline-body, .journey-content');
+  const dropdown = container.querySelector('.sherp-dropdown');
   const arrow = toggleEl.querySelector('.cert-toggle-arrow');
   const isOpen = dropdown.style.maxHeight !== '0px' && dropdown.style.maxHeight !== '';
   if (isOpen) {
