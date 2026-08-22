@@ -187,7 +187,11 @@
   .reveal.visible{opacity:1;transform:none;}
 
   /* SQL INTRO LAYOUT */
-  .intro-layout{display:grid;grid-template-columns:1.3fr 1fr;gap:2rem;align-items:start;}
+  .intro-layout{display:grid;grid-template-columns:1.3fr 1fr;gap:2rem;align-items:stretch;}
+  .intro-layout .sql-window,.intro-layout .chart-panel{display:flex;flex-direction:column;height:100%;}
+  .intro-layout .sql-window{margin-top:0;}
+  .intro-layout .sql-body{flex:1;}
+  .intro-layout .chart-svg{flex:1;height:auto;min-height:0;width:100%;}
   @media(max-width:900px){.intro-layout{grid-template-columns:1fr;}}
 
   /* ABOUT */
@@ -237,7 +241,7 @@
 
   /* PROJECTS */
   #projects .projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:1.4rem;}
-  .project-card{background:#111827;border:1px solid #1e2d45;border-radius:var(--radius);padding:1.8rem;transition:all 0.3s;display:flex;flex-direction:column;min-height:300px;position:relative;overflow:hidden;}
+  .project-card{background:#111827;border:1px solid #1e2d45;border-radius:var(--radius);padding:1.8rem;transition:all 0.3s;display:flex;flex-direction:column;min-height:auto;position:relative;overflow:hidden;}
   .project-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));transform:scaleX(0);transform-origin:left;transition:transform 0.3s;}
   .project-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:var(--shadow-glow);}
   .project-card:hover::before{transform:scaleX(1);}
@@ -275,7 +279,7 @@
   .cert-dl-btn:hover{background:#33ddff;box-shadow:0 0 12px var(--glow);}
 
   /* SLIDESHOW */
-  .slideshow-viewport{position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--border);aspect-ratio:4/3;background:#0a0d1a;}
+  .slideshow-viewport{position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--border);aspect-ratio:4/3;background:#0a0d1a;width:100%;}
   .slideshow-img{width:100%;height:100%;object-fit:cover;cursor:pointer;display:block;}
   .slideshow-arrow{position:absolute;top:50%;transform:translateY(-50%);width:32px;height:32px;border-radius:50%;background:rgba(5,7,15,0.7);border:1px solid var(--border2);color:var(--ink);font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;backdrop-filter:blur(6px);}
   .slideshow-arrow:hover{background:var(--accent);color:#000;box-shadow:0 0 12px var(--glow);}
@@ -376,7 +380,7 @@
     #chat-panel{width:calc(100vw - 2rem);right:1rem;}
     .hero-ctas{flex-wrap:wrap;}
     .stat-grid{grid-template-columns:repeat(2,1fr);}
-    #beyond .beyond-grid{grid-template-columns:1fr;}
+    #beyond .beyond-grid{grid-template-columns:repeat(2,1fr);}
     .footer-inner{grid-template-columns:1fr;gap:2rem;}
   }
 
@@ -415,6 +419,11 @@
   .project-img-banner .banner-placeholder i{width:2.2rem;height:2.2rem;opacity:0.3;}
   .project-img-banner .banner-placeholder span{font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;}
   .project-card.hidden{display:none;}
+  .project-desc-wrap{max-height:0;overflow:hidden;transition:max-height 0.4s ease,opacity 0.3s;opacity:0;}
+  .project-desc-wrap.open{max-height:500px;opacity:1;margin-top:0.8rem;}
+  .project-toggle{margin-top:0.9rem;display:inline-flex;align-items:center;gap:0.5rem;cursor:pointer;font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--accent);letter-spacing:0.08em;user-select:none;}
+  .project-toggle:hover{color:#33ddff;}
+  .project-toggle .cert-toggle-arrow{transition:transform 0.3s;font-size:0.7rem;}
   .project-gh-badge{position:absolute;top:0.7rem;left:0.7rem;width:32px;height:32px;border-radius:50%;background:rgba(5,7,15,0.85);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(-6px);transition:all 0.25s;z-index:2;color:var(--ink);text-decoration:none;}
   .project-card:hover .project-gh-badge{opacity:1;transform:translateY(0);}
   .project-gh-badge:hover{background:var(--accent);color:#000;box-shadow:0 0 12px var(--glow);}
@@ -433,21 +442,23 @@
   .skill-tag.hi{background:rgba(0,212,255,0.08);border-color:rgba(0,212,255,0.25);color:var(--accent);}
 
   /* BEYOND THE CODE */
-  #beyond .beyond-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem;}
+  #beyond .beyond-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;}
   .beyond-card{background:#111827;border:1px solid #1e2d45;border-radius:var(--radius);overflow:hidden;transition:all 0.3s;cursor:default;}
   .beyond-card:hover{border-color:var(--accent);box-shadow:var(--shadow-glow);transform:translateY(-3px);}
-  .beyond-img-wrap{width:100%;height:180px;overflow:hidden;background:linear-gradient(135deg,var(--surface2),rgba(124,58,237,0.1));display:flex;align-items:center;justify-content:center;position:relative;}
-  .beyond-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform 0.4s;}
+  .beyond-img-wrap{width:100%;aspect-ratio:1/1;overflow:hidden;background:linear-gradient(135deg,var(--surface2),rgba(124,58,237,0.1));display:flex;align-items:center;justify-content:center;position:relative;}
+  .beyond-img-wrap img{width:100%;height:100%;object-fit:cover;object-position:center 30%;transition:transform 0.4s;}
   .beyond-card:hover .beyond-img-wrap img{transform:scale(1.06);}
-  .beyond-img-wrap .slideshow-viewport{aspect-ratio:unset;height:180px;border:none;border-radius:0;}
-  .beyond-img-wrap .slideshow-arrow{opacity:0;transition:opacity 0.2s;}
+  .beyond-img-wrap .slideshow-viewport{aspect-ratio:1/1;height:auto;border:none;border-radius:0;width:100%;}
+  .beyond-img-wrap .slideshow{width:100%;}
+  .beyond-img-wrap .slideshow-img{object-position:center 30%;}
+  .beyond-img-wrap .slideshow-arrow{opacity:0;transition:opacity 0.2s;width:26px;height:26px;font-size:1rem;}
   .beyond-card:hover .beyond-img-wrap .slideshow-arrow{opacity:1;}
-  .beyond-img-wrap .slideshow-dots{position:absolute;bottom:0.5rem;left:0;right:0;margin:0;z-index:2;}
+  .beyond-img-wrap .slideshow-dots{position:absolute;bottom:0.4rem;left:0;right:0;margin:0;z-index:2;}
   .beyond-img-wrap i{width:3rem;height:3rem;opacity:0.25;}
-  .beyond-body{padding:1.2rem 1.4rem;}
-  .beyond-title{font-size:0.95rem;font-weight:600;color:var(--ink);margin-bottom:0.4rem;display:flex;align-items:center;gap:0.5rem;}
-  .beyond-title i{width:0.9rem;height:0.9rem;stroke:var(--accent);}
-  .beyond-desc{font-size:0.82rem;color:var(--muted);line-height:1.75;}
+  .beyond-body{padding:0.85rem 1rem;}
+  .beyond-title{font-size:0.82rem;font-weight:600;color:var(--ink);margin-bottom:0.3rem;display:flex;align-items:center;gap:0.4rem;}
+  .beyond-title i{width:0.8rem;height:0.8rem;stroke:var(--accent);}
+  .beyond-desc{font-size:0.74rem;color:var(--muted);line-height:1.5;}
 
   /* SITE FOOTER */
   .site-footer{background:#0a0d1a;border-top-color:#1e2d45;border-top:1px solid var(--border);padding:3rem 4rem 1.5rem;position:relative;z-index:1;}
@@ -504,7 +515,7 @@
     <div class="stat-grid">
       <div class="stat-card accent">
         <i data-lucide="briefcase" style="width:1rem;height:1rem;stroke:rgba(255,255,255,0.5);margin-bottom:0.5rem;display:block;"></i>
-        <div class="stat-num" data-target="3.5">0</div>
+        <div class="stat-num" data-target="3.5" data-decimal="1">0</div>
         <div class="stat-label">Years Experience</div>
       </div>
       <div class="stat-card">
@@ -523,12 +534,12 @@
         <div class="stat-label">M+ Funding Tracked</div>
       </div>
       <div class="stat-card">
-        <i data-lucide="database" style="width:1rem;height:1rem;stroke:var(--accent);margin-bottom:0.5rem;display:block;opacity:0.7;"></i>
-        <div class="stat-num" data-target="10">0</div>
-        <div class="stat-label">+ Data Sources Unified</div>
+        <i data-lucide="building-2" style="width:1rem;height:1rem;stroke:var(--accent);margin-bottom:0.5rem;display:block;opacity:0.7;"></i>
+        <div class="stat-num" data-target="35">0</div>
+        <div class="stat-label">Departments Reported</div>
       </div>
       <div class="stat-card">
-        <i data-lucide="cpu" style="width:1rem;height:1rem;stroke:var(--accent);margin-bottom:0.5rem;display:block;opacity:0.7;"></i>
+        <i data-lucide="rocket" style="width:1rem;height:1rem;stroke:var(--accent);margin-bottom:0.5rem;display:block;opacity:0.7;"></i>
         <div class="stat-num" data-target="6">0</div>
         <div class="stat-label">Projects Shipped</div>
       </div>
@@ -732,14 +743,6 @@
             <a href="https://www.credly.com/org/ey/badge/ey-analytics-data-science-bronze-2021" target="_blank" style="display:inline-flex;align-items:center;gap:0.35rem;font-family:'Space Mono',monospace;font-size:0.62rem;color:var(--accent2);text-decoration:none;border:1px solid rgba(124,58,237,0.3);border-radius:6px;padding:0.25rem 0.6rem;margin-top:0.6rem;width:fit-content;"><i data-lucide="external-link" style="width:0.6rem;height:0.6rem;"></i> View on Credly</a>
           </div>
         </div>
-        <div class="journey-item">
-          <div class="journey-dot" style="border-color:var(--accent2);box-shadow:0 0 10px rgba(124,58,237,0.3);"><i data-lucide="layout-dashboard" style="width:0.8rem;height:0.8rem;stroke:var(--accent2);"></i></div>
-          <div class="journey-content" style="border-color:rgba(124,58,237,0.2);">
-            <div class="journey-year" style="color:var(--accent2);">2026</div>
-            <div class="journey-title-text">Microsoft Certified: Power BI Data Analyst Associate (PL-300)</div>
-            <div class="journey-sub">Microsoft · Credential ID: A9A7CAB3C355EDF5 · Expires Aug 2027</div>
-          </div>
-        </div>
       </div>
 
     </div>
@@ -921,8 +924,11 @@
       </div>
       <div class="project-tag">// Energy Analytics</div>
       <div class="project-title"><a href="https://github.com/hima24/electricity-forecasting-aws" target="_blank" style="color:inherit;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='inherit'">Electricity Demand Forecasting ↗</a></div>
+      <div class="project-toggle" onclick="toggleTimeline(this)"><span>VIEW DETAILS</span><span class="cert-toggle-arrow">▼</span></div>
+      <div class="project-desc-wrap">
       <div class="project-desc">Built and deployed an end-to-end forecasting pipeline (ENTSO-E + OpenWeatherMap APIs, LightGBM model) as containerized services on AWS ECS/Fargate, with a Streamlit dashboard, EFS-backed persistent storage, and Secrets Manager/IAM for secure credential handling. Includes a Financial Goal Tracker translating live forecasts into personal electricity cost estimates with configurable budget goals.</div>
       <div class="project-techs"><span class="project-tech">XGBoost</span><span class="project-tech">Random Forest</span><span class="project-tech">Python</span><span class="project-tech">AWS Fargate</span></div>
+      </div>
     </div>
     <div class="project-card hover-lift" data-cat="db">
       <div class="project-num">02</div>
@@ -932,8 +938,11 @@
       </div>
       <div class="project-tag">// Database · SQL · Full Stack</div>
       <div class="project-title"><a href="https://github.com/hima24/pulsebeat" target="_blank" style="color:inherit;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='inherit'">PulseBeat - Music Recommendation Platform ↗</a></div>
+      <div class="project-toggle" onclick="toggleTimeline(this)"><span>VIEW DETAILS</span><span class="cert-toggle-arrow">▼</span></div>
+      <div class="project-desc-wrap">
       <div class="project-desc">Designed a normalized (3NF) MySQL schema with views, stored procedures, and triggers to power personalized recommendations, playlists, and ratings. Built a Streamlit + Python frontend with user login, a recommendation engine, and an admin analytics dashboard.</div>
       <div class="project-techs"><span class="project-tech">MySQL</span><span class="project-tech">Python</span><span class="project-tech">Streamlit</span><span class="project-tech">SQL</span></div>
+      </div>
     </div>
     <div class="project-card hover-lift" data-cat="nlp">
       <div class="project-num">03</div>
@@ -943,8 +952,11 @@
       </div>
       <div class="project-tag">// NLP · Transformers</div>
       <div class="project-title"><a href="https://github.com/hima24/ag-news-headline-generation" target="_blank" style="color:inherit;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='inherit'">AG News Topic Classification & Headline Generation ↗</a></div>
+      <div class="project-toggle" onclick="toggleTimeline(this)"><span>VIEW DETAILS</span><span class="cert-toggle-arrow">▼</span></div>
+      <div class="project-desc-wrap">
       <div class="project-desc">Fine-tuned T5-base (223M params) for abstractive headline generation on AG News articles, benchmarking against DistilBART and PEGASUS across four decoding strategies. Achieved ROUGE-L 76.81% and BERTScore 94.68% on 120K+ news records.</div>
       <div class="project-techs"><span class="project-tech">DistilBERT</span><span class="project-tech">T5</span><span class="project-tech">PEGASUS</span><span class="project-tech">HuggingFace</span></div>
+      </div>
     </div>
     <div class="project-card hover-lift" data-cat="ml">
       <div class="project-num">04</div>
@@ -954,8 +966,11 @@
       </div>
       <div class="project-tag">// Machine Learning</div>
       <div class="project-title"><a href="https://github.com/hima24/twitter-location-prediction" target="_blank" style="color:inherit;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='inherit'">User Location Prediction on Twitter ↗</a></div>
+      <div class="project-toggle" onclick="toggleTimeline(this)"><span>VIEW DETAILS</span><span class="cert-toggle-arrow">▼</span></div>
+      <div class="project-desc-wrap">
       <div class="project-desc">Ensemble geolocation prediction models using the Tweepy API and XGBoost, CatBoost, AdaBoost, and Random Forest - 40% accuracy improvement through feature engineering and statistical validation.</div>
       <div class="project-techs"><span class="project-tech">XGBoost</span><span class="project-tech">CatBoost</span><span class="project-tech">Tweepy</span><span class="project-tech">Scikit-learn</span></div>
+      </div>
     </div>
     <div class="project-card hover-lift" data-cat="nlp ml">
       <div class="project-num">05</div>
@@ -965,8 +980,11 @@
       </div>
       <div class="project-tag">// Text Classification</div>
       <div class="project-title"><a href="https://github.com/hima24/Fake-News-Detector" target="_blank" style="color:inherit;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='inherit'">Fake News Detection ↗</a></div>
+      <div class="project-toggle" onclick="toggleTimeline(this)"><span>VIEW DETAILS</span><span class="cert-toggle-arrow">▼</span></div>
+      <div class="project-desc-wrap">
       <div class="project-desc">Fake news classifier using TF-IDF vectorization and a Passive Aggressive Classifier achieving 90% accuracy. Full EDA, feature engineering, hyperparameter tuning, and cross-validation to address dataset imbalances.</div>
       <div class="project-techs"><span class="project-tech">TF-IDF</span><span class="project-tech">NLTK</span><span class="project-tech">Scikit-learn</span><span class="project-tech">Pandas</span></div>
+      </div>
     </div>
     <div class="project-card hover-lift" data-cat="bi">
       <div class="project-num">06</div>
@@ -976,8 +994,11 @@
       </div>
       <div class="project-tag">// Business Intelligence</div>
       <div class="project-title"><a href="https://github.com/hima24" target="_blank" style="color:inherit;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='inherit'">Sales Performance Dashboard ↗</a></div>
+      <div class="project-toggle" onclick="toggleTimeline(this)"><span>VIEW DETAILS</span><span class="cert-toggle-arrow">▼</span></div>
+      <div class="project-desc-wrap">
       <div class="project-desc">Interactive Power BI dashboard analyzing 50K+ transactions across regional sales, profitability, and customer trends. DAX KPIs, drill-throughs, and real-time SQL Server refresh improved reporting efficiency by 35%.</div>
       <div class="project-techs"><span class="project-tech">Power BI</span><span class="project-tech">DAX</span><span class="project-tech">SQL Server</span><span class="project-tech">Excel</span></div>
+      </div>
     </div>
   </div>
 </section>
@@ -986,8 +1007,8 @@
 
 <!-- CERTIFICATIONS -->
 <section id="certifications" class="reveal">
-  <div class="section-label">Honors & Certifications</div>
-  <div class="section-title">Honors & <span>Certifications</span></div>
+  <div class="section-label">Certifications</div>
+  <div class="section-title">My <span>credentials</span></div>
   <div class="certs-grid">
 
     <!-- PL-300 -->
@@ -1006,8 +1027,8 @@
       </div>
       <div class="cert-dropdown">
         <div class="cert-dropdown-inner">
-          <img src="cert-pl300.jpg" alt="PL-300 Certificate" class="cert-img" onclick="openLightbox(this.src)"/>
-          <a href="https://learn.microsoft.com/api/credentials/share/en-in/HimavarshaSreenivas-9665/A9A7CAB3C355EDF5?sharingId=53F1E4127DAEF89E" target="_blank" class="cert-dl-btn"><i data-lucide="external-link" style="width:0.7rem;height:0.7rem;"></i> View Credential</a>
+          <img src="cert-pl300.jpg" alt="PL-300 Certificate" class="cert-img" onclick="openLightbox(this.src)" onerror="this.style.display='none';"/>
+          <a href="https://learn.microsoft.com/api/credentials/share/en-in/HimavarshaSreenivas-9665/A9A7CAB3C355EDF5?sharingId=53F1E4127DAEF89E" target="_blank" rel="noopener" class="cert-dl-btn"><i data-lucide="external-link" style="width:0.7rem;height:0.7rem;"></i> View Credential</a>
         </div>
       </div>
     </div>
@@ -1120,28 +1141,6 @@
       </div>
     </div>
 
-    <!-- DAAD RISE -->
-    <div class="cert-card hover-lift">
-      <div class="cert-card-top">
-        <div class="cert-icon" style="background:#ffcc0014;"><i data-lucide="award" style="width:1.5rem;height:1.5rem;stroke:#ffcc00;"></i></div>
-        <div class="cert-body">
-          <div class="cert-name">DAAD RISE Professional Scholarship, Germany</div>
-          <div class="cert-issuer">Among 58 selected worldwide (200 applicants) {declined}</div>
-          <span class="cert-badge"><i data-lucide="check-circle" style="width:0.6rem;height:0.6rem;vertical-align:middle;margin-right:2px;stroke:var(--accent3);"></i> Recognized on UH's page</span>
-        </div>
-      </div>
-      <div class="cert-toggle" onclick="toggleCert(this)">
-        <span>VIEW RECOGNITION</span>
-        <span class="cert-toggle-arrow">▼</span>
-      </div>
-      <div class="cert-dropdown">
-        <div class="cert-dropdown-inner">
-          <a href="https://www.facebook.com/share/p/1DYTXkzsHg/" target="_blank" class="cert-dl-btn"><i data-lucide="external-link" style="width:0.7rem;height:0.7rem;"></i> Facebook</a>
-          <a href="https://www.instagram.com/p/DXZ5jvsjbnk/?img_index=1&igsi=MW45bjBjem50dmE2Yw==" target="_blank" class="cert-dl-btn"><i data-lucide="external-link" style="width:0.7rem;height:0.7rem;"></i> Instagram</a>
-        </div>
-      </div>
-    </div>
-
     <!-- Python Programming -->
     <div class="cert-card hover-lift">
       <div class="cert-card-top">
@@ -1240,11 +1239,11 @@
 <section id="beyond" class="reveal">
   <div class="section-label">Personal</div>
   <div class="section-title">Beyond the <span>Code</span></div>
-  <p style="color:var(--muted);font-size:0.92rem;margin-bottom:2rem;max-width:500px;line-height:1.8;">When I'm not building dashboards or training models, you'll find me here.</p>
+  <p style="color:var(--muted);font-size:0.92rem;margin-bottom:1.2rem;max-width:500px;line-height:1.6;">When I'm not building dashboards or training models, you'll find me here.</p>
   <div class="beyond-grid">
     <div class="beyond-card">
       <div class="beyond-img-wrap">
-        <div class="slideshow" data-images="travel-1.jpeg,travel-2.jpeg,travel-3.jpeg">
+        <div class="slideshow" data-images="travel-1.jpeg,travel-2.jpeg,travel-3.jpeg,travel-4.jpeg">
           <div class="slideshow-viewport">
             <img class="slideshow-img" src="travel-1.jpeg" alt="Travel" onclick="openLightbox(this.src)"/>
             <button class="slideshow-arrow prev" onclick="slideMove(this,-1)">‹</button>
@@ -1255,7 +1254,7 @@
       </div>
       <div class="beyond-body">
         <div class="beyond-title"><i data-lucide="map-pin" style="stroke:var(--accent);"></i> Travel & Exploration</div>
-        <div class="beyond-desc">Exploring new cultures, cities, and landscapes - from the temples of South India to Houston and Singapore. Every trip adds a new lens to how I see and solve problems.</div>
+        <div class="beyond-desc">New cultures, cities, and landscapes - from South India to Houston and Singapore.</div>
       </div>
     </div>
     <div class="beyond-card">
@@ -1271,7 +1270,7 @@
       </div>
       <div class="beyond-body">
         <div class="beyond-title"><i data-lucide="camera" style="stroke:var(--accent);"></i> Photography</div>
-        <div class="beyond-desc">Capturing moments - travel scenes, street life, and the quiet details most people walk past. Photography taught me to look for patterns and stories in everything.</div>
+        <div class="beyond-desc">Travel scenes, street life, and quiet details most people walk past.</div>
       </div>
     </div>
     <div class="beyond-card">
@@ -1287,7 +1286,7 @@
       </div>
       <div class="beyond-body">
         <div class="beyond-title"><i data-lucide="heart" style="stroke:var(--accent);"></i> Pets & Animals</div>
-        <div class="beyond-desc">A lifelong animal lover - dogs especially. Nothing resets a long day of debugging faster than some quality time with a furry friend.</div>
+        <div class="beyond-desc">A lifelong animal lover, dogs especially - the best reset after a long debugging day.</div>
       </div>
     </div>
     <div class="beyond-card">
@@ -1303,7 +1302,7 @@
       </div>
       <div class="beyond-body">
         <div class="beyond-title"><i data-lucide="utensils" style="stroke:var(--accent);"></i> Cooking & Food Exploration</div>
-        <div class="beyond-desc">South Indian home cooking is where I started, but curiosity took over. I love recreating dishes from places I've visited - food is just data storytelling with better smells.</div>
+        <div class="beyond-desc">Started with South Indian home cooking, now recreating dishes from places I've visited.</div>
       </div>
     </div>
   </div>
@@ -1320,6 +1319,7 @@
       <div class="about-badge" style="display:inline-flex;margin-bottom:1.4rem;"><i data-lucide="map-pin" style="width:0.75rem;height:0.75rem;vertical-align:middle;margin-right:4px;"></i> Houston, TX · Open to Relocate</div>
       <div class="contact-links">
         <a href="mailto:himavarsha.2403@gmail.com" class="contact-link"><span class="contact-link-icon"><i data-lucide="mail" style="width:1rem;height:1rem;stroke:var(--accent);"></i></span> himavarsha.2403@gmail.com</a>
+        <a href="tel:+13463970950" class="contact-link"><span class="contact-link-icon"><i data-lucide="phone" style="width:1rem;height:1rem;stroke:var(--accent);"></i></span> +1 346-397-0950</a>
       <a href="https://www.linkedin.com/in/himavarshas" target="_blank" class="contact-link"><span class="contact-link-icon"><svg width="16" height="16" fill="var(--accent)" style="width:1rem;height:1rem;" viewBox="0 0 16 16">
   <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z"/>
 </svg></span> LinkedIn</a>
@@ -1640,7 +1640,7 @@ document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
 // COUNTERS
 function animCounter(el){
   const target=parseFloat(el.dataset.target),dec=parseInt(el.dataset.decimal||0);
-  const sfxMap={'3.5':'+','3.9':'','40':'%','34':'M+','10':'+','6':''};
+  const sfxMap={'3.5':'+','40':'%','34':'M+','35':'','6':''};
   const sfx=sfxMap[el.dataset.target]??'';
   const dur=1800,start=performance.now();
   function upd(now){const p=Math.min((now-start)/dur,1),e=1-Math.pow(1-p,3);el.textContent=(target*e).toFixed(dec)+sfx;if(p<1)requestAnimationFrame(upd);else el.textContent=target.toFixed(dec)+sfx;}
