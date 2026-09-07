@@ -250,9 +250,11 @@
   .project-desc{font-size:0.85rem;color:var(--muted);line-height:1.8;flex:1;}
   .project-techs{display:flex;flex-wrap:wrap;gap:0.4rem;padding-top:1rem;}
   .project-tech{font-family:'Space Mono',monospace;font-size:0.65rem;padding:0.22rem 0.6rem;border-radius:4px;background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.2);color:var(--accent2);}
-  .project-footer{display:flex;justify-content:flex-end;margin-top:1rem;padding-top:0.8rem;border-top:1px solid var(--border);}
+  .project-footer{display:flex;justify-content:flex-end;gap:0.6rem;margin-top:1rem;padding-top:0.8rem;border-top:1px solid var(--border);}
   .btn-github{display:inline-flex;align-items:center;gap:0.4rem;font-size:0.72rem;font-weight:600;color:var(--accent);text-decoration:none;border:1px solid rgba(0,212,255,0.3);border-radius:6px;padding:0.3rem 0.8rem;transition:all 0.2s;font-family:'Space Mono',monospace;}
   .btn-github:hover{background:var(--glow);box-shadow:0 0 10px var(--glow);}
+  .btn-demo{display:inline-flex;align-items:center;gap:0.4rem;font-size:0.72rem;font-weight:600;color:var(--accent2);text-decoration:none;border:1px solid rgba(124,58,237,0.3);border-radius:6px;padding:0.3rem 0.8rem;transition:all 0.2s;font-family:'Space Mono',monospace;}
+  .btn-demo:hover{background:rgba(124,58,237,0.12);box-shadow:0 0 10px rgba(124,58,237,0.3);}
 
   /* CERTIFICATIONS */
   #certifications .certs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem;}
@@ -986,6 +988,20 @@
       <div class="project-techs"><span class="project-tech">TF-IDF</span><span class="project-tech">NLTK</span><span class="project-tech">Scikit-learn</span><span class="project-tech">Pandas</span></div>
       </div>
     </div>
+  <div class="project-card">
+    <div class="project-tag">Data Visualization</div>
+    <div class="project-title">Netflix Movies & TV Shows - Content Strategy Analysis</div>
+    <div class="project-desc">Interactive Tableau story analyzing a 6,236-title Netflix catalog across content type, genre, maturity rating, and country to uncover how the platform's content strategy has evolved - built with Top N filters, cross-filtered maps, and dynamic parameters.</div>
+  <div class="project-techs">
+    <span class="project-tech">Tableau</span>
+    <span class="project-tech">Data Viz</span>
+    <span class="project-tech">BI</span>
+  </div>
+  <div class="project-footer">
+    <a href="https://public.tableau.com/views/Netflix_17888067069740/Story1?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link" target="_blank" class="btn-demo">Live Dashboard</a>
+    <a href="https://github.com/hima24/Netflix-Tableau-analysis" target="_blank" class="btn-github">GitHub</a>
+  </div>
+</div>
     <div class="project-card hover-lift" data-cat="bi">
       <div class="project-num">06</div>
       <div class="project-img-banner">
