@@ -475,6 +475,15 @@
   .footer-col a svg{width:0.8rem;height:0.8rem;flex-shrink:0;stroke:var(--accent);}
   .footer-bottom{max-width:1300px;margin:0 auto;padding-top:1.5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
   .footer-bottom p{font-family:'Space Mono',monospace;font-size:0.68rem;color:var(--muted);}
+  .project-tag{display:flex;align-items:center;gap:0.45rem;}
+  .project-tag i,.project-tag svg{flex-shrink:0;stroke:var(--accent2);}
+  .project-title{margin-bottom:0.3rem !important;}
+  .project-techs{padding-top:0.4rem !important;margin-bottom:0.9rem;}
+  .project-tech{display:inline-flex;align-items:center;gap:0.4rem;padding:0.3rem 0.75rem !important;border-radius:999px !important;background:rgba(148,163,184,0.10) !important;border:1px solid rgba(0,212,255,0.14) !important;color:#C9D4E5 !important;font-weight:500;transition:border-color 0.2s,background 0.2s;}
+  .project-tech:hover{border-color:rgba(0,212,255,0.4) !important;background:rgba(0,212,255,0.08) !important;}
+  .project-tech img[src*="mysql"]{filter:brightness(2.2) saturate(0.8);}
+  .project-tech img{width:0.85rem;height:0.85rem;object-fit:contain;flex-shrink:0;}
+  .project-deploy{position:absolute;bottom:0.6rem;left:0.6rem;z-index:2;display:inline-flex;align-items:center;gap:0.35rem;font-family:'Space Mono',monospace;font-size:0.62rem;letter-spacing:0.05em;padding:0.25rem 0.6rem;border-radius:20px;background:rgba(5,7,15,0.85);border:1px solid var(--border2);color:var(--ink);backdrop-filter:blur(6px);}
 </style>
 </head>
 <body>
@@ -542,7 +551,7 @@
       </div>
       <div class="stat-card">
         <i data-lucide="rocket" style="width:1rem;height:1rem;stroke:var(--accent);margin-bottom:0.5rem;display:block;opacity:0.7;"></i>
-        <div class="stat-num" data-target="7">0</div>
+        <div class="stat-num" data-target="6">0</div>
         <div class="stat-label">Projects Shipped</div>
       </div>
     </div>
@@ -920,15 +929,16 @@
     <div class="project-card hover-lift" data-cat="ml bi">
       <div class="project-num">01</div>
       <div class="project-img-banner">
+        <span class="project-deploy"><i data-lucide="cloud" style="width:0.75rem;height:0.75rem;stroke:#FF9900;"></i>Live on AWS</span>
         <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=600&q=80" alt="Electricity" onerror="this.parentElement.innerHTML='<div class=\'banner-placeholder\'><i data-lucide=\'zap\' style=\'stroke:var(--accent3);\'></i><span>Energy Analytics</span></div>';lucide.createIcons();">
         <a href="https://github.com/hima24/electricity-forecasting-aws" target="_blank" class="project-gh-badge" title="View on GitHub"><i data-lucide="github" style="width:1rem;height:1rem;"></i></a>
       </div>
-      <div class="project-tag">// Energy Analytics</div>
+      <div class="project-tag"><i data-lucide="zap" style="width:0.8rem;height:0.8rem;"></i>Energy Analytics</div>
       <div class="project-title"><a href="https://github.com/hima24/electricity-forecasting-aws" target="_blank" style="color:inherit;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='inherit'">Electricity Demand Forecasting ↗</a></div>
+      <div class="project-techs"><span class="project-tech"><img src="https://cdn.jsdelivr.net/npm/devicon@2.17.0/icons/python/python-original.svg" alt="" loading="lazy">Python</span><span class="project-tech"><i data-lucide="trees" style="width:0.85rem;height:0.85rem;stroke:#9BE36D;"></i>LightGBM</span><span class="project-tech"><img src="https://cdn.jsdelivr.net/npm/devicon@2.17.0/icons/docker/docker-original.svg" alt="" loading="lazy">Docker</span><span class="project-tech"><img src="https://cdn.jsdelivr.net/npm/devicon@2.17.0/icons/streamlit/streamlit-original.svg" alt="" loading="lazy">Streamlit</span><span class="project-tech"><i data-lucide="cloud" style="width:0.85rem;height:0.85rem;stroke:#FF9900;"></i>AWS Fargate</span></div>
       <div class="project-toggle" onclick="toggleTimeline(this)"><span>VIEW DETAILS</span><span class="cert-toggle-arrow">▼</span></div>
       <div class="project-desc-wrap">
       <div class="project-desc">Forecasts next-hour electricity demand for Spain's national grid at 1.2% error (343 MW MAE, R² 0.988), 67% better than a last-hour baseline. Built and deployed the end-to-end pipeline (ENTSO-E + OpenWeatherMap APIs, LightGBM model) as containerized services on AWS ECS/Fargate, with a Streamlit dashboard, EFS-backed persistent storage, and Secrets Manager/IAM for secure credential handling. Includes a Financial Goal Tracker translating live forecasts into personal electricity cost estimates with configurable budget goals.</div>
-      <div class="project-techs"><span class="project-tech">LightGBM</span><span class="project-tech">Python</span><span class="project-tech">Docker</span><span class="project-tech">AWS Fargate</span></div>
       </div>
     </div>
     <div class="project-card hover-lift" data-cat="db">
@@ -937,12 +947,12 @@
         <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&q=80" alt="PulseBeat Music" onerror="this.parentElement.innerHTML='<div class=\'banner-placeholder\'><i data-lucide=\'music\' style=\'stroke:var(--accent);\'></i><span>Database · Full Stack</span></div>';lucide.createIcons();">
         <a href="https://github.com/hima24/pulsebeat" target="_blank" class="project-gh-badge" title="View on GitHub"><i data-lucide="github" style="width:1rem;height:1rem;"></i></a>
       </div>
-      <div class="project-tag">// Database · SQL · Full Stack</div>
+      <div class="project-tag"><i data-lucide="database" style="width:0.8rem;height:0.8rem;"></i>Database · SQL · Full Stack</div>
       <div class="project-title"><a href="https://github.com/hima24/pulsebeat" target="_blank" style="color:inherit;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='inherit'">PulseBeat - Music Recommendation Platform ↗</a></div>
+      <div class="project-techs"><span class="project-tech"><img src="https://cdn.jsdelivr.net/npm/devicon@2.17.0/icons/mysql/mysql-original.svg" alt="" loading="lazy">MySQL</span><span class="project-tech"><img src="https://cdn.jsdelivr.net/npm/devicon@2.17.0/icons/python/python-original.svg" alt="" loading="lazy">Python</span><span class="project-tech"><img src="https://cdn.jsdelivr.net/npm/devicon@2.17.0/icons/streamlit/streamlit-original.svg" alt="" loading="lazy">Streamlit</span><span class="project-tech"><i data-lucide="table-2" style="width:0.85rem;height:0.85rem;stroke:#00D4FF;"></i>SQL</span></div>
       <div class="project-toggle" onclick="toggleTimeline(this)"><span>VIEW DETAILS</span><span class="cert-toggle-arrow">▼</span></div>
       <div class="project-desc-wrap">
       <div class="project-desc">Designed a normalized (3NF) 15-table MySQL database with 3 views, 3 stored procedures, and 5 triggers powering personalized recommendations, playlists, and ratings, with analytical SQL (joins, subqueries, window functions) behind a Streamlit app and admin analytics dashboard.</div>
-      <div class="project-techs"><span class="project-tech">MySQL</span><span class="project-tech">Python</span><span class="project-tech">Streamlit</span><span class="project-tech">SQL</span></div>
       </div>
     </div>
     <div class="project-card hover-lift" data-cat="nlp">
@@ -951,12 +961,12 @@
         <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&q=80" alt="NLP News" onerror="this.parentElement.innerHTML='<div class=\'banner-placeholder\'><i data-lucide=\'file-text\' style=\'stroke:var(--accent2);\'></i><span>NLP · Transformers</span></div>';lucide.createIcons();">
         <a href="https://github.com/hima24/ag-news-headline-generation" target="_blank" class="project-gh-badge" title="View on GitHub"><i data-lucide="github" style="width:1rem;height:1rem;"></i></a>
       </div>
-      <div class="project-tag">// NLP · Transformers</div>
+      <div class="project-tag"><i data-lucide="newspaper" style="width:0.8rem;height:0.8rem;"></i>NLP · Transformers</div>
       <div class="project-title"><a href="https://github.com/hima24/ag-news-headline-generation" target="_blank" style="color:inherit;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='inherit'">AG News Topic Classification & Headline Generation ↗</a></div>
+      <div class="project-techs"><span class="project-tech"><img src="https://cdn.jsdelivr.net/npm/devicon@2.17.0/icons/pytorch/pytorch-original.svg" alt="" loading="lazy">PyTorch</span><span class="project-tech"><i data-lucide="sparkles" style="width:0.85rem;height:0.85rem;stroke:#FFD21E;"></i>Hugging Face</span><span class="project-tech"><i data-lucide="cpu" style="width:0.85rem;height:0.85rem;stroke:#A78BFA;"></i>DistilBERT</span><span class="project-tech"><i data-lucide="cpu" style="width:0.85rem;height:0.85rem;stroke:#A78BFA;"></i>T5</span></div>
       <div class="project-toggle" onclick="toggleTimeline(this)"><span>VIEW DETAILS</span><span class="cert-toggle-arrow">▼</span></div>
       <div class="project-desc-wrap">
       <div class="project-desc">Fine-tuned DistilBERT for 4-class news topic classification (94.5% test accuracy) and T5-base (223M params) for headline generation (76.81% ROUGE-L, 94.68% BERTScore) on 120K AG News articles, comparing four decoding strategies.</div>
-      <div class="project-techs"><span class="project-tech">DistilBERT</span><span class="project-tech">T5</span><span class="project-tech">HuggingFace</span><span class="project-tech">PyTorch</span></div>
       </div>
     </div>
     <div class="project-card hover-lift" data-cat="ml">
@@ -965,40 +975,42 @@
         <img src="https://images.unsplash.com/photo-1611605698335-8b1569810432?w=600&q=80" alt="Twitter Location" onerror="this.parentElement.innerHTML='<div class=\'banner-placeholder\'><i data-lucide=\'map-pin\' style=\'stroke:var(--accent2);\'></i><span>Machine Learning</span></div>';lucide.createIcons();">
         <a href="https://github.com/hima24/twitter-location-prediction" target="_blank" class="project-gh-badge" title="View on GitHub"><i data-lucide="github" style="width:1rem;height:1rem;"></i></a>
       </div>
-      <div class="project-tag">// Machine Learning</div>
+      <div class="project-tag"><i data-lucide="map-pin" style="width:0.8rem;height:0.8rem;"></i>Machine Learning</div>
       <div class="project-title"><a href="https://github.com/hima24/twitter-location-prediction" target="_blank" style="color:inherit;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='inherit'">User Location Prediction on Twitter ↗</a></div>
+      <div class="project-techs"><span class="project-tech"><img src="https://cdn.jsdelivr.net/npm/devicon@2.17.0/icons/python/python-original.svg" alt="" loading="lazy">Python</span><span class="project-tech"><img src="https://cdn.jsdelivr.net/npm/devicon@2.17.0/icons/scikitlearn/scikitlearn-original.svg" alt="" loading="lazy">Scikit-learn</span><span class="project-tech"><i data-lucide="text" style="width:0.85rem;height:0.85rem;stroke:#00D4FF;"></i>TF-IDF</span><span class="project-tech"><i data-lucide="trending-up" style="width:0.85rem;height:0.85rem;stroke:#A78BFA;"></i>Logistic Regression</span></div>
       <div class="project-toggle" onclick="toggleTimeline(this)"><span>VIEW DETAILS</span><span class="cert-toggle-arrow">▼</span></div>
       <div class="project-desc-wrap">
       <div class="project-desc">Predicts a Twitter user's US state from tweet text alone on 375K real geotagged tweets. TF-IDF + Logistic Regression cut median location error by 37% (728 to 461 km) over a baseline, with 58% region accuracy.</div>
-      <div class="project-techs"><span class="project-tech">TF-IDF</span><span class="project-tech">Logistic Regression</span><span class="project-tech">NLP</span><span class="project-tech">Scikit-learn</span></div>
       </div>
     </div>
   <div class="project-card hover-lift" data-cat="bi">
   <div class="project-num">05</div>
   <div class="project-img-banner">
+        <span class="project-deploy"><i data-lucide="globe" style="width:0.75rem;height:0.75rem;stroke:#E97627;"></i>Tableau Public</span>
     <img src="https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=600&q=80" alt="Netflix Tableau Analysis" onerror="this.parentElement.innerHTML='<div class=\'banner-placeholder\'><i data-lucide=\'film\' style=\'stroke:var(--accent2);\'></i><span>Tableau · BI</span></div>';lucide.createIcons();">
     <a href="https://github.com/hima24/Netflix-Tableau-analysis" target="_blank" class="project-gh-badge" title="View on GitHub"><i data-lucide="github" style="width:1rem;height:1rem;"></i></a>
   </div>
-  <div class="project-tag">// Data Visualization · BI</div>
+  <div class="project-tag"><i data-lucide="bar-chart-3" style="width:0.8rem;height:0.8rem;"></i>Data Visualization · BI</div>
   <div class="project-title"><a href="https://public.tableau.com/views/Netflix_17888067069740/Story1?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link" target="_blank" style="color:inherit;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='inherit'">Netflix Movies & TV Shows - Content Strategy Analysis ↗</a></div>
+      <div class="project-techs"><span class="project-tech"><i data-lucide="bar-chart-3" style="width:0.85rem;height:0.85rem;stroke:#E97627;"></i>Tableau</span><span class="project-tech"><i data-lucide="pie-chart" style="width:0.85rem;height:0.85rem;stroke:#00D4FF;"></i>Data Viz</span><span class="project-tech"><i data-lucide="layout-dashboard" style="width:0.85rem;height:0.85rem;stroke:#A78BFA;"></i>BI</span></div>
   <div class="project-toggle" onclick="toggleTimeline(this)"><span>VIEW DETAILS</span><span class="cert-toggle-arrow">▼</span></div>
   <div class="project-desc-wrap">
   <div class="project-desc">Interactive Tableau story analyzing a 6,236-title Netflix catalog across content type, genre, maturity rating, and country to uncover how the platform's content strategy has evolved - built with Top N filters, cross-filtered maps, and dynamic parameters.</div>
-  <div class="project-techs"><span class="project-tech">Tableau</span><span class="project-tech">Data Viz</span><span class="project-tech">BI</span></div>
   </div>
 </div>
     <div class="project-card hover-lift" data-cat="ml">
       <div class="project-num">06</div>
       <div class="project-img-banner">
+        <span class="project-deploy"><i data-lucide="cloud" style="width:0.75rem;height:0.75rem;stroke:#4285F4;"></i>Live on GCP</span>
         <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&q=80" alt="Healthcare cost prediction" onerror="this.parentElement.innerHTML='<div class=\'banner-placeholder\'><i data-lucide=\'heart-pulse\' style=\'stroke:var(--accent);\'></i><span>Healthcare ML · API</span></div>';lucide.createIcons();">
         <a href="https://github.com/hima24/healthcare-cost-ai-gcp" target="_blank" class="project-gh-badge" title="View on GitHub"><i data-lucide="github" style="width:1rem;height:1rem;"></i></a>
       </div>
-      <div class="project-tag">// Healthcare ML · Cloud API</div>
+      <div class="project-tag"><i data-lucide="heart-pulse" style="width:0.8rem;height:0.8rem;"></i>Healthcare ML · Cloud API</div>
       <div class="project-title"><a href="https://github.com/hima24/healthcare-cost-ai-gcp" target="_blank" style="color:inherit;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='inherit'">Meridian - Healthcare Cost Prediction API ↗</a></div>
+      <div class="project-techs"><span class="project-tech"><img src="https://cdn.jsdelivr.net/npm/devicon@2.17.0/icons/python/python-original.svg" alt="" loading="lazy">Python</span><span class="project-tech"><img src="https://cdn.jsdelivr.net/npm/devicon@2.17.0/icons/scikitlearn/scikitlearn-original.svg" alt="" loading="lazy">Scikit-learn</span><span class="project-tech"><img src="https://cdn.jsdelivr.net/npm/devicon@2.17.0/icons/fastapi/fastapi-original.svg" alt="" loading="lazy">FastAPI</span><span class="project-tech"><img src="https://cdn.jsdelivr.net/npm/devicon@2.17.0/icons/docker/docker-original.svg" alt="" loading="lazy">Docker</span><span class="project-tech"><img src="https://cdn.jsdelivr.net/npm/devicon@2.17.0/icons/googlecloud/googlecloud-original.svg" alt="" loading="lazy">GCP Cloud Run</span></div>
       <div class="project-toggle" onclick="toggleTimeline(this)"><span>VIEW DETAILS</span><span class="cert-toggle-arrow">▼</span></div>
       <div class="project-desc-wrap">
       <div class="project-desc">Predicts next-year healthcare costs for 95,663 synthetic Medicare beneficiaries (CMS DE-SynPUF) from prior-year claims. Gradient Boosting was best of 7 models ($3,499 MAE, 25% below a mean baseline). Served as a Dockerized FastAPI service with single and batch scoring, deployed live on GCP Cloud Run.</div>
-      <div class="project-techs"><span class="project-tech">Scikit-learn</span><span class="project-tech">FastAPI</span><span class="project-tech">Docker</span><span class="project-tech">GCP Cloud Run</span></div>
       </div>
     </div>
   </div>
