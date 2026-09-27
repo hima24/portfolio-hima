@@ -47,7 +47,6 @@ PROJECTS (all on github.com/hima24)
 - Twitter User Location Prediction (NLP): predicts a user's US state from tweet text on 375K real geotagged tweets; TF-IDF + Logistic Regression cut median location error by 37% (728 to 461 km) and reached 58% region accuracy.
 - PulseBeat (SQL): normalized 15-table MySQL database with 3 views, 3 stored procedures, and 5 triggers powering a Streamlit music recommendation app with an admin analytics dashboard.
 - Netflix Content Strategy Analysis (Tableau): 7-part interactive Tableau story on 6,236 Netflix titles, published on Tableau Public.
-- Fake News Detection: TF-IDF + Passive Aggressive Classifier, about 90% accuracy.
 - This portfolio site and its AI assistant (Node.js/Express + Claude API).
 
 SKILLS
