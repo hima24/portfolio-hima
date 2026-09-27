@@ -1,4 +1,4 @@
-const express = require('express');
+﻿const express = require('express');
 const router = express.Router();
 
 router.post('/', async (req, res) => {
@@ -35,7 +35,7 @@ EDUCATION
 - B.E. Computer Science and Engineering, Visvesvaraya Technological University, Bengaluru (GPA 3.6), Aug 2018 - Jul 2022
 
 EXPERIENCE
-- Graduate Assistant, BI Developer - University of Houston Law Center (Dec 2025 - present): builds and maintains the Power BI financial reporting platform used by the Dean and finance leadership. Models 11 source tables (budget, general ledger, payroll, chartfields) to report $34.3M in FY2026 funding across 35 departments, reconciled to the dollar against the official budget book. Extended it to FY2027 ($30.85M validated to the dollar). Implemented row-level security by department. Built a 3-level drill-down Detailed Chartfield Report and diagnosed join-key gaps across 53,000+ payroll records.
+- Instructional Assistant (BI Developer) - University of Houston Law Center (Dec 2025 - present): builds and maintains the Power BI financial reporting platform used by the Dean and finance leadership. Models 11 source tables (budget, general ledger, payroll, chartfields) to report $34.3M in FY2026 funding across 35 departments, reconciled to the dollar against the official budget book. Extended it to FY2027 ($30.85M validated to the dollar). Implemented row-level security by department. Built a 3-level drill-down Detailed Chartfield Report and diagnosed join-key gaps across 53,000+ payroll records.
 - Research Intern - Humana Institute, University of Houston (SHERP, Jun 2026): built and compared Logistic Regression, Random Forest, and XGBoost models for maternal-health risk scoring, integrated into Luna, a bilingual (EN/ES) maternal-health app for high-risk pregnant and postpartum women in Harris County. Led Luna's front-end and UI/UX (HTML, CSS, JavaScript).
 - Associate Analyst - Ernst & Young (EY-GDS) (Aug 2022 - Dec 2024): built a lead-scoring model in Python that increased conversion of top-ranked leads by 40% over the client's rule-based scoring (validated with A/B testing); customer segmentation with clustering; reusable MySQL stored procedures that cut report preparation time by 30%; led a 4-member team onsite in Singapore to deliver an analytics dashboard; two EY Spot Awards.
 - Data Science Intern - AIRobotica (Jun - Jul 2020): forecasting models in Python on MySQL retail data; regression, ANOVA, and data-quality checks.
